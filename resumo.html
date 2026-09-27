@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resumo — Corrente de Memória | Português 9º ano</title>
+<style>
+:root{
+  --grafite:#12151a; --grafite2:#1a1f27; --grafite3:#222932;
+  --cobre:#cf7b3a; --cobre2:#e79b5e;
+  --musgo:#6b9a63; --alerta:#c9453f; --postit:#e8d37a;
+  --texto:#ece7de; --texto2:#9ea79c; --linha:#2e3742;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--grafite);color:var(--texto);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:18.5px;line-height:1.7;
+  background-image:radial-gradient(circle at 12% 8%,rgba(207,123,58,.07),transparent 42%),
+                   radial-gradient(circle at 88% 92%,rgba(107,154,99,.06),transparent 45%);}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px 90px}
+
+header.topo{border-bottom:2px solid var(--cobre);padding:30px 0 18px;text-align:center}
+.marca{font-size:clamp(28px,6.5vw,52px);font-weight:800;letter-spacing:.06em;margin:0;line-height:1.05;
+  text-transform:uppercase;color:var(--cobre2)}
+.marca .sub{display:block;font-size:.3em;letter-spacing:.3em;font-weight:500;margin-top:12px;color:var(--texto2)}
+.faixa{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;font-size:12.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--texto2);border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  margin-top:16px;padding:9px 0}
+.selo{display:inline-block;background:var(--cobre);color:#141014;font-weight:700;font-size:12.5px;
+  letter-spacing:.14em;padding:6px 14px;border-radius:3px;text-transform:uppercase}
+
+nav.abas{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0 6px}
+nav.abas a{font-size:13.5px;text-decoration:none;color:var(--texto);border:1px solid var(--linha);
+  background:var(--grafite2);padding:9px 14px;border-radius:3px}
+nav.abas a.atual{background:var(--cobre);color:#141014;border-color:var(--cobre);font-weight:700}
+nav.abas a:hover{background:var(--grafite3);border-color:var(--cobre)}
+nav.abas a.atual:hover{background:var(--cobre2);color:#141014}
+
+.painel{border:1px solid var(--linha);background:var(--grafite2);padding:13px 15px;margin:20px 0 26px;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-radius:4px}
+.painel .status{font-size:13px;color:var(--texto2)}
+.painel .btns{display:flex;gap:7px;flex-wrap:wrap}
+button{font-size:13.5px;cursor:pointer;font-family:inherit;border:1px solid var(--linha);
+  background:var(--grafite3);color:var(--texto);padding:9px 14px;border-radius:3px}
+button:hover{background:var(--cobre);color:#141014;border-color:var(--cobre)}
+button.principal{background:var(--cobre);color:#141014;border-color:var(--cobre);font-weight:700}
+button.principal:hover{background:var(--cobre2)}
+
+.leitura{position:sticky;top:0;z-index:10;height:6px;background:var(--grafite3)}
+.leitura i{display:block;height:100%;width:0;background:var(--cobre);transition:width .15s}
+
+h2.sec{border-bottom:2px solid var(--cobre);margin:40px 0 20px;padding-bottom:8px;font-size:27px;color:var(--cobre2)}
+h3.sub{font-size:21px;color:var(--cobre2);margin:26px 0 12px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px;margin:0 0 20px}
+.card{border:1px solid var(--linha);background:var(--grafite2);border-radius:5px;padding:17px 19px}
+.card h4{margin:0 0 10px;font-size:19px;color:var(--cobre2)}
+.card p{margin:0 0 10px}
+.card p:last-child{margin:0}
+.card.verde{border-left:4px solid var(--musgo)}
+.card.cobre{border-left:4px solid var(--cobre)}
+.card.vermelho{border-left:4px solid var(--alerta)}
+
+.ex{background:var(--grafite);border-left:4px solid var(--cobre);padding:11px 15px;margin:0 0 14px;font-style:italic}
+.ex b,.ex u{font-style:normal}
+.destaque{background:rgba(207,123,58,.26);padding:1px 5px;border-radius:2px}
+
+table.t{width:100%;border-collapse:collapse;background:var(--grafite2);font-size:17px;margin:0 0 20px}
+table.t th,table.t td{border:1px solid var(--linha);padding:11px 13px;text-align:left;vertical-align:top}
+table.t th{background:var(--grafite3);color:var(--cobre2);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+table.t td b{color:var(--cobre2)}
+.tabela-wrap{overflow-x:auto}
+
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin:0 0 20px}
+.flip{perspective:1000px;min-height:185px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;min-height:185px;transition:transform .55s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--linha);border-radius:6px;
+  padding:16px 18px;display:flex;flex-direction:column;justify-content:center;background:var(--grafite2)}
+.flip .frente{align-items:center;text-align:center;border-top:4px solid var(--cobre)}
+.flip .frente .pal{font-size:33px;font-weight:800;color:var(--cobre2);line-height:1.1}
+.flip .frente .dica{font-size:13.5px;color:var(--texto2);margin-top:11px;letter-spacing:.06em;text-transform:uppercase}
+.flip .verso{transform:rotateY(180deg);background:var(--grafite3);border-top:4px solid var(--musgo);font-size:15.5px;line-height:1.55;overflow:auto}
+.flip .verso b{color:var(--musgo)}
+
+.postit{background:var(--postit);color:#2a2410;border-radius:3px;padding:16px 18px;font-size:16.5px;line-height:1.55;
+  box-shadow:0 5px 14px rgba(0,0,0,.35);transform:rotate(-.7deg)}
+.postit b{display:block;margin-bottom:6px;font-size:15px;letter-spacing:.07em;text-transform:uppercase}
+.postits{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:17px;margin:0 0 22px}
+.postits .postit:nth-child(even){transform:rotate(.8deg)}
+
+.alerta{border:2px solid var(--alerta);background:rgba(201,69,63,.1);border-radius:5px;padding:16px 19px;margin:0 0 18px}
+.alerta b{color:var(--alerta)}
+
+.etiquetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px;margin:0 0 20px}
+.etq{border:1px dashed var(--cobre);background:var(--grafite2);border-radius:5px;padding:14px 16px;font-size:16px}
+.etq b{display:block;color:var(--cobre2);font-size:18px;margin-bottom:6px}
+
+.glos{border:1px solid var(--linha);background:var(--grafite2);border-radius:5px;padding:6px 20px;margin:0 0 20px}
+.glos dl{margin:0}
+.glos dt{font-weight:700;color:var(--cobre2);margin-top:15px;font-size:18px}
+.glos dd{margin:5px 0 0;color:var(--texto)}
+
+.fim{border:2px solid var(--cobre);background:var(--grafite2);border-radius:6px;padding:24px;text-align:center;margin:36px 0 0}
+.fim h3{margin:0 0 12px;color:var(--cobre2);font-size:24px}
+
+.rodape{border-top:2px solid var(--cobre);margin-top:36px;padding-top:18px;display:flex;flex-wrap:wrap;
+  gap:13px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--texto2)}
+.rodape a{color:var(--texto);text-decoration:none;border:1px solid var(--linha);background:var(--grafite2);
+  padding:10px 16px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
+.rodape a:hover{background:var(--cobre);color:#141014;border-color:var(--cobre)}
+
+.overlay{position:fixed;inset:0;background:rgba(6,8,11,.78);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.overlay.on{display:flex}
+.modal{background:var(--grafite2);border:2px solid var(--cobre);max-width:440px;width:100%;padding:23px;border-radius:5px}
+.modal h3{margin:0 0 11px;font-size:21px;color:var(--cobre2)}
+.modal p{margin:0 0 17px}
+.modal .acoes{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+@media(max-width:620px){body{font-size:17.5px}}
+</style>
+</head>
+<body>
+<div class="leitura"><i id="leitura"></i></div>
+<div class="wrap">
+
+<header class="topo">
+  <h1 class="marca">Corrente de Memória<span class="sub">Português · 9º ano · Prova de 01/10</span></h1>
+  <div class="faixa">
+    <span>Cap. 17 — Diários de guerra</span><span>·</span>
+    <span>Cap. 18 — Intolerância</span><span>·</span>
+    <span>pp. 17–26 e 41–45</span>
+  </div>
+  <p style="margin:17px 0 0"><span class="selo">Elo 3 — Resumo</span></p>
+</header>
+
+<nav class="abas">
+  <a href="leitura-guiada.html">📖 1. Leitura Guiada</a>
+  <a href="quiz.html">🎯 2. Quiz</a>
+  <a href="resumo.html" class="atual">🗺️ 3. Resumo</a>
+  <a href="simulado.html">📝 4. Simulado</a>
+  <a href="index.html">🏠 Início</a>
+</nav>
+
+<div class="painel">
+  <div class="status" id="status">Carregando seu progresso…</div>
+  <div class="btns">
+    <button id="btExportar">📥 Exportar</button>
+    <button id="btImportar">📤 Importar</button>
+    <button id="btZerar">🗑️ Zerar tudo</button>
+  </div>
+</div>
+<input type="file" id="arquivo" accept="application/json" style="display:none">
+
+<p style="font-size:15.5px;background:var(--grafite2);border:1px solid var(--linha);border-left:4px solid var(--cobre);padding:14px 16px;border-radius:4px">
+<b>Como usar:</b> este é o resumo de bolso da prova. As <b>cartas</b> viram quando você clica nelas — tente responder de cabeça
+antes de virar. Os <b>post-its amarelos</b> são as dicas que mais caem, e as <b>caixas vermelhas</b> são as pegadinhas.
+</p>
+
+<h2 class="sec">🧠 Parte 1 — Como se monta um argumento</h2>
+
+<div class="cards">
+  <div class="card cobre">
+    <h4>Dedução → do geral para o particular</h4>
+    <p>Começa numa <b>premissa geral</b> aceita como verdadeira, aplica a um <b>caso particular</b> e chega a uma <b>conclusão lógica</b>.</p>
+    <p><b>Se a premissa for verdadeira, a conclusão também é.</b> É o raciocínio mais seguro.</p>
+  </div>
+  <div class="card vermelho">
+    <h4>Indução → do particular para o geral</h4>
+    <p>Começa em <b>casos particulares</b> e propõe uma <b>regra geral</b> a partir deles.</p>
+    <p>A conclusão é só <b>provável</b>. Quando o salto é grande demais, vira <b>generalização questionável</b> — ou <b>preconceituosa</b>.</p>
+  </div>
+</div>
+
+<div class="tabela-wrap">
+<table class="t">
+  <thead><tr><th></th><th>Dedução</th><th>Indução</th></tr></thead>
+  <tbody>
+    <tr><td><b>Caminho</b></td><td>geral → particular</td><td>particular → geral</td></tr>
+    <tr><td><b>Ponto de partida</b></td><td>princípio geral (premissa)</td><td>um ou poucos casos observados</td></tr>
+    <tr><td><b>Força da conclusão</b></td><td>garantida (se a premissa for verdadeira)</td><td>apenas provável</td></tr>
+    <tr><td><b>Exemplo</b></td><td>Vacinas protegem. O pai se vacinou. Logo, está protegido.</td><td>Dois motociclistas erraram. Logo, todo motociclista erra.</td></tr>
+    <tr><td><b>Risco</b></td><td>partir de uma premissa falsa</td><td>generalizar demais e cair no preconceito</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="postits">
+  <div class="postit"><b>📌 Dica de prova</b>Para saber qual é qual, olhe só o <b>primeiro passo</b>: se ele começa com “todo”, “todos”, “sempre” — é uma regra geral, então é dedução. Se começa com um caso específico, é indução.</div>
+  <div class="postit"><b>📌 Dica de prova</b>Ao escrever um texto de opinião, confira se a sua argumentação <b>parte de premissas verdadeiras</b>. Conclusão bonita apoiada em premissa furada não convence ninguém.</div>
+</div>
+
+<h2 class="sec">🔗 Parte 2 — Referentes: as palavras que retomam</h2>
+
+<div class="cards">
+  <div class="card verde">
+    <h4>O que são</h4>
+    <p>Palavras (quase sempre <b>pronomes</b>) que voltam para pegar algo já dito. O que elas retomam é o <b>antecedente</b>.</p>
+  </div>
+  <div class="card verde">
+    <h4>Para que servem</h4>
+    <p>Evitam a repetição da mesma palavra e garantem a <b>coesão</b>: as partes do texto ficam presas umas às outras.</p>
+  </div>
+  <div class="card vermelho">
+    <h4>Quando atrapalham</h4>
+    <p>Quando o referente é <b>vago</b> (“aquilo que”) ou quando há <b>dois candidatos</b> possíveis na frase — aí nasce a ambiguidade.</p>
+  </div>
+</div>
+
+<div class="ex">“Colhi três ramos e fixei-<b>os</b> sobre minha cama.” → <b>os</b> = os três ramos.<br>
+“<b>Ela</b> acha que <b>ele</b> poderá <b>me</b> interessar.” → ela = a mãe · ele = o diário · me = quem escreve.</div>
+
+<h2 class="sec">⛓️ Parte 3 — Pronomes relativos</h2>
+
+<p>São palavras que <b>retomam um nome já expresso antes</b> no texto e, ao mesmo tempo, <b>ligam duas orações numa só</b>,
+evitando a repetição empobrecedora. O nome retomado é o <b>antecedente</b>.</p>
+
+<div class="ex">Sem o elo: O país entrou em guerra. <b>Eu nasci nesse país.</b><br>
+Com o elo: O país <b>onde</b> nasci entrou em guerra.</div>
+
+<div class="tabela-wrap">
+<table class="t">
+  <thead><tr><th>Variáveis (mudam de gênero e número)</th><th>Invariáveis (forma única)</th></tr></thead>
+  <tbody><tr>
+    <td><b>o qual, a qual, os quais, as quais</b><br><b>cujo, cuja, cujos, cujas</b><br><b>quanto, quanta, quantos, quantas</b></td>
+    <td><b>que, quem, onde, como, quando</b></td>
+  </tr></tbody>
+</table>
+</div>
+
+<h3 class="sub">🃏 Cartas dos pronomes — clique para virar</h3>
+<div class="flips">
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">que</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>O curinga.</b> Retoma <b>pessoas e coisas</b>. É o mais usado. Só é relativo quando tem antecedente e pode virar “o qual”. Se apenas emenda uma declaração (“disse que viria”), é conjunção.</div>
+  </div></div>
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">quem</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>Só pessoa.</b> E quase sempre vem <b>precedido de preposição</b>: com quem, de quem, a quem, por quem. Se o antecedente não for gente, “quem” está fora.</div>
+  </div></div>
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">onde</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>Só lugar.</b> Equivale a <b>“em que”</b>. Se o antecedente não for lugar, está errado. Com dois lugares na frase, fica ambíguo — troque por <b>no qual / na qual</b>.</div>
+  </div></div>
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">cujo</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>Posse.</b> Liga possuidor (antes) a possuído (depois). <b>Concorda com o possuído</b>. Nunca leva artigo depois. Sem possuído, não existe.</div>
+  </div></div>
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">quando</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>Tem duas vidas.</b> É <b>pronome relativo</b> se tiver um nome antes e puder virar “em que”. É <b>conjunção subordinativa adverbial temporal</b> se apenas abrir uma oração de tempo.</div>
+  </div></div>
+  <div class="flip"><div class="in">
+    <div class="face frente"><span class="pal">o qual<br>a qual</span><span class="dica">clique para virar</span></div>
+    <div class="face verso"><b>O desambiguador.</b> Como varia em gênero e número, ele aponta com precisão qual é o antecedente. Com preposição, vira <b>no qual, na qual, pela qual, do qual…</b></div>
+  </div></div>
+</div>
+
+<h3 class="sub">🔤 A preposição vem da regência</h3>
+<p>A preposição colada ao pronome relativo não é escolha: ela é <b>exigida pelo verbo</b> (ou pelo termo) anterior. Pergunte o que o verbo pede e cole.</p>
+<div class="tabela-wrap">
+<table class="t">
+  <thead><tr><th>O verbo/termo pede</th><th>Fica assim</th></tr></thead>
+  <tbody>
+    <tr><td>viver <b>em</b></td><td>O século <b>em que</b> vivemos apresenta vários conflitos.</td></tr>
+    <tr><td>referir-se <b>a</b></td><td>A lei <b>a que</b> a advogada se referiu foi abolida.</td></tr>
+    <tr><td>gostar <b>de</b></td><td>O filme <b>de que</b> mais gosto foi premiado.</td></tr>
+    <tr><td>ansiar <b>por</b></td><td>Saiu a notícia <b>pela qual</b> todos ansiavam.</td></tr>
+    <tr><td>desobedecer <b>a</b></td><td>Apresente-se ao superior <b>a quem</b> desobedeceu.</td></tr>
+    <tr><td>lembrar-se <b>de</b></td><td>Os números <b>de que</b> nos lembramos não batiam.</td></tr>
+    <tr><td>colocar <b>em</b></td><td>A estante <b>na qual</b> coloquei os diários é antiga.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="alerta">
+<b>⚠️ Pegadinha da ambiguidade.</b> “Visitamos o museu da cidade <b>onde</b> Anne Frank ficou escondida.” — foi no museu ou na cidade?
+Como “onde” é invariável, ele não dá pista nenhuma. Troque pelo variável: <b>no qual</b> (masculino → museu) ou <b>na qual</b> (feminino → cidade).
+</div>
+
+<h2 class="sec">✂️ Parte 4 — Oração subordinada adjetiva</h2>
+
+<div class="cards">
+  <div class="card cobre">
+    <h4>Função</h4>
+    <p>Caracterizar um <b>substantivo</b>. Tem valor equivalente ao de um <b>adjetivo</b>.</p>
+    <p style="font-size:16px"><i>a garota <b>famosa</b></i> → <i>a garota <b>que ficou famosa por causa de seu diário</b></i></p>
+  </div>
+  <div class="card cobre">
+    <h4>Forma</h4>
+    <p>Intercala-se à oração principal e <b>depende dela</b> para ter sentido completo.</p>
+    <p>Quando <b>desenvolvida</b>, entra no período por meio de um <b>pronome relativo</b>.</p>
+  </div>
+</div>
+
+<h3 class="sub">Desenvolvida ou reduzida?</h3>
+<div class="tabela-wrap">
+<table class="t">
+  <thead><tr><th>Tipo</th><th>Como reconhecer</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Desenvolvida</b></td><td>tem <b>conectivo</b> (pronome relativo) + <b>verbo conjugado</b></td><td>Visitei o museu <b>que foi inaugurado</b> em São Paulo.</td></tr>
+    <tr><td><b>Reduzida de particípio</b></td><td>sem conectivo; verbo em <b>-ado / -ido</b></td><td>Visitei o museu <b>inaugurado</b> em São Paulo. <br><i>(= que se inaugurou)</i></td></tr>
+    <tr><td><b>Reduzida de gerúndio</b></td><td>sem conectivo; verbo em <b>-ndo</b></td><td>São retratadas pessoas <b>sofrendo</b> com a guerra. <br><i>(= que sofreram)</i></td></tr>
+    <tr><td><b>Reduzida de infinitivo</b></td><td>sem conectivo; verbo em <b>-ar / -er / -ir</b></td><td>As cenas evocam situações <b>de arrepiar</b>. <br><i>(= que arrepiam)</i></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 class="sub">Explicativa ou restritiva? O quadro que decide</h3>
+<div class="tabela-wrap">
+<table class="t">
+  <thead><tr><th></th><th>Explicativa</th><th>Restritiva</th></tr></thead>
+  <tbody>
+    <tr><td><b>Vírgulas</b></td><td>SIM — vem isolada por vírgulas</td><td>NÃO — vem colada ao nome</td></tr>
+    <tr><td><b>O que faz</b></td><td>acrescenta uma característica própria do substantivo; <b>generaliza</b></td><td>delimita, restringe, destaca entre os semelhantes; <b>especifica</b></td></tr>
+    <tr><td><b>Alcance</b></td><td>vale para <b>todos</b> do grupo</td><td>vale só para <b>uma parte</b> do grupo</td></tr>
+    <tr><td><b>Dá para tirar?</b></td><td>sim, sem mudar o essencial</td><td>não: a informação é essencial</td></tr>
+    <tr><td><b>Exemplo</b></td><td>Os museus<b>,</b> que abrigam relatos e objetos<b>,</b> são essenciais.<br><i>(todo museu abriga)</i></td><td>O museu <b>que recupera cenas do Holocausto</b> impactou minha vida.<br><i>(aquele museu específico)</i></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="alerta">
+<b>⚠️ A vírgula é a marca, mas o critério é o SENTIDO.</b><br>
+“O homem<b>,</b> que semeia guerras<b>,</b> espalha a própria destruição.” → explicativa: <b>todo</b> homem faz isso.<br>
+“O homem <b>que semeia guerras</b> espalha a própria destruição.” → restritiva: <b>só esse tipo</b> de homem.<br>
+Mesma frase, duas mensagens completamente diferentes.
+</div>
+
+<h3 class="sub">🏷️ A análise completa, etiqueta por etiqueta</h3>
+<p style="margin-bottom:14px">Tomando <i>“Ali está a foto da garota <b>que ficou famosa por causa de seu diário</b>”</i>:</p>
+<div class="etiquetas">
+  <div class="etq"><b>oração</b>porque possui um verbo (“ficou”).</div>
+  <div class="etq"><b>subordinada</b>porque exerce função sintática em relação à oração principal.</div>
+  <div class="etq"><b>adjetiva</b>porque caracteriza um nome — tem função de adjetivo.</div>
+  <div class="etq"><b>explicativa</b>porque esclarece uma característica própria do substantivo (e está entre vírgulas quando isolada).</div>
+  <div class="etq"><b>desenvolvida</b>porque tem conectivo (“que”) e verbo conjugado (“ficou”).</div>
+</div>
+
+<h2 class="sec">🚩 As pegadinhas em post-it</h2>
+<div class="postits">
+  <div class="postit"><b>📌 onde</b>Só para <b>lugar</b>. “O jogo <s>onde</s> assistimos” está errado: o certo é <b>a que / ao qual</b> assistimos.</div>
+  <div class="postit"><b>📌 cujo</b>Concorda com o que vem <b>depois</b>: <i>o escritor <b>cujas obras</b>…</i> — com “obras”, não com “escritor”.</div>
+  <div class="postit"><b>📌 cujo</b>Nunca use <b>artigo</b> depois dele: “cuja <s>a</s> vida” está errado.</div>
+  <div class="postit"><b>📌 cujo</b>Sem <b>possuído</b> depois, não existe: “o rapaz <s>cujo</s> estava na escada” está errado.</div>
+  <div class="postit"><b>📌 quem</b>Só retoma <b>pessoa</b> e quase sempre vem com preposição. “Os dados <s>quem</s> apresentamos” → <b>que</b>.</div>
+  <div class="postit"><b>📌 regência</b>A preposição vem do <b>verbo</b>: lembrar-se <b>de</b> → <i>de que</i>; gostar <b>de</b> → <i>de que</i>; referir-se <b>a</b> → <i>a que</i>.</div>
+  <div class="postit"><b>📌 quando</b>Sem antecedente <b>nominal</b> antes dele, não é pronome relativo: é <b>conjunção temporal</b>.</div>
+  <div class="postit"><b>📌 reduzida</b>Continua sendo <b>adjetiva</b> mesmo sem pronome relativo. O que define é a <b>função</b>, não o conectivo.</div>
+  <div class="postit"><b>📌 nem toda</b>Em “não é ele <b>quem vai lutar</b>”, a oração <b>não</b> é adjetiva: ela não caracteriza “ele”, ela é o <b>sujeito</b>. Invertendo: “Quem vai lutar não é ele.”</div>
+  <div class="postit"><b>📌 indução</b>Dois ou três casos <b>não</b> autorizam falar de um grupo inteiro. Esse salto é a <b>generalização preconceituosa</b>.</div>
+</div>
+
+<h2 class="sec">📖 Glossário da prova</h2>
+<div class="glos">
+<dl>
+  <dt>Premissa</dt><dd>Afirmação de partida de um raciocínio, aceita como verdadeira.</dd>
+  <dt>Dedução</dt><dd>Raciocínio que vai de um princípio geral para um caso particular; se a premissa é verdadeira, a conclusão também é.</dd>
+  <dt>Indução</dt><dd>Raciocínio que parte de casos particulares e propõe uma regra geral; a conclusão é apenas provável.</dd>
+  <dt>Generalização preconceituosa</dt><dd>Indução malfeita: poucos casos viram carimbo para um grupo inteiro.</dd>
+  <dt>Referente</dt><dd>Palavra que retoma no texto algo já mencionado.</dd>
+  <dt>Antecedente</dt><dd>O termo retomado pelo pronome relativo — o nome que vem antes dele.</dd>
+  <dt>Coesão</dt><dd>Amarração entre as partes do texto, feita por pronomes, conectivos e repetições controladas.</dd>
+  <dt>Pronome relativo</dt><dd>Pronome que retoma um nome já dito e liga duas orações, evitando a repetição.</dd>
+  <dt>Regência</dt><dd>Exigência de preposição que um verbo ou um nome faz ao seu complemento.</dd>
+  <dt>Oração subordinada adjetiva</dt><dd>Oração que caracteriza um substantivo da oração principal, com valor de adjetivo.</dd>
+  <dt>Desenvolvida</dt><dd>Adjetiva com conectivo (pronome relativo) e verbo conjugado.</dd>
+  <dt>Reduzida</dt><dd>Adjetiva sem conectivo, com o verbo no infinitivo, gerúndio ou particípio.</dd>
+  <dt>Explicativa</dt><dd>Adjetiva entre vírgulas que generaliza: vale para todos do grupo.</dd>
+  <dt>Restritiva</dt><dd>Adjetiva sem vírgulas que especifica: vale só para parte do grupo.</dd>
+</dl>
+</div>
+
+<div class="fim">
+  <h3>🔗 Corrente montada. Hora de testar de verdade.</h3>
+  <p style="margin:0 0 16px">O Simulado tem 28 questões no estilo vestibular: somatório, números romanos e múltipla escolha.</p>
+  <a href="simulado.html"><button class="principal" style="font-size:17px;padding:14px 28px">📝 Ir para o Simulado</button></a>
+</div>
+
+<div class="rodape">
+  <span>Próximo material da sequência →</span>
+  <a href="simulado.html">📝 Ir para o Simulado</a>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3 id="mTit">Aviso</h3>
+    <p id="mTxt"></p>
+    <div class="acoes">
+      <button id="mNao" style="display:none">Cancelar</button>
+      <button class="principal" id="mSim">Entendi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var KEY='pt9_cap17_18_resumo_v1';
+var mem={};
+function ler(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return mem}}
+function gravar(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){mem=s}carimbo();}
+var S=ler(); if(S.rolagem===undefined)S.rolagem=0; if(!S.viradas)S.viradas={};
+
+function carimbo(){
+  var d=new Date();
+  var f=d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  S.quando=f;
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){mem=S}
+  document.getElementById('status').textContent='💾 Salvo — leitura: '+S.rolagem+'% · cartas viradas: '+Object.keys(S.viradas).length+'/6 · '+f;
+}
+function aviso(t,msg,onSim,comCancelar){
+  document.getElementById('mTit').textContent=t;
+  document.getElementById('mTxt').textContent=msg;
+  document.getElementById('mNao').style.display=comCancelar?'inline-block':'none';
+  var ov=document.getElementById('overlay'); ov.classList.add('on');
+  document.getElementById('mSim').onclick=function(){ov.classList.remove('on'); if(onSim)onSim();};
+  document.getElementById('mNao').onclick=function(){ov.classList.remove('on');};
+}
+
+/* ===== cartas ===== */
+var flips=document.querySelectorAll('.flip');
+flips.forEach(function(fl,i){
+  if(S.viradas[i])fl.classList.add('on');
+  fl.addEventListener('click',function(){
+    fl.classList.toggle('on');
+    if(fl.classList.contains('on'))S.viradas[i]=true;
+    gravar(S);
+  });
+});
+
+/* ===== % máximo de rolagem ===== */
+var ultimo=0;
+function marcarRolagem(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  var pc=h<=0?100:Math.round(window.scrollY/h*100);
+  if(pc<0)pc=0; if(pc>100)pc=100;
+  document.getElementById('leitura').style.width=pc+'%';
+  if(pc>S.rolagem){ S.rolagem=pc;
+    if(Date.now()-ultimo>1500){ultimo=Date.now();gravar(S);} }
+}
+window.addEventListener('scroll',marcarRolagem,{passive:true});
+window.addEventListener('resize',marcarRolagem);
+
+/* ===== painel ===== */
+document.getElementById('btExportar').onclick=function(){
+  var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='resumo-portugues9-cap17-18.json'; a.click();
+};
+document.getElementById('btImportar').onclick=function(){document.getElementById('arquivo').click();};
+document.getElementById('arquivo').onchange=function(e){
+  var f=e.target.files[0]; if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{ var d=JSON.parse(r.result); S=d; if(S.rolagem===undefined)S.rolagem=0; if(!S.viradas)S.viradas={};
+      flips.forEach(function(fl,i){ if(S.viradas[i])fl.classList.add('on'); else fl.classList.remove('on'); });
+      gravar(S); aviso('Pronto','Seu progresso foi importado com sucesso.');
+    }catch(err){ aviso('Ops','Não consegui ler esse arquivo. Ele precisa ser o .json exportado por este material.'); }
+  };
+  r.readAsText(f);
+};
+document.getElementById('btZerar').onclick=function(){
+  aviso('Zerar tudo?','Isso apaga o progresso de leitura e as cartas viradas deste Resumo.',function(){
+    S={rolagem:0,viradas:{}};
+    flips.forEach(function(fl){fl.classList.remove('on');});
+    gravar(S);
+  },true);
+};
+
+marcarRolagem(); carimbo();
+</script>
+</body>
+</html>

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leitura Guiada — Corrente de Memória | Português 9º ano</title>
+<style>
+:root{
+  --grafite:#12151a; --grafite2:#1a1f27; --grafite3:#222932;
+  --cobre:#cf7b3a; --cobre2:#e79b5e;
+  --musgo:#6b9a63; --alerta:#c9453f;
+  --texto:#ece7de; --texto2:#9ea79c; --linha:#2e3742;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--grafite);color:var(--texto);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.7;
+  background-image:radial-gradient(circle at 12% 8%,rgba(207,123,58,.07),transparent 42%),
+                   radial-gradient(circle at 88% 92%,rgba(107,154,99,.06),transparent 45%);}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px 90px}
+
+header.topo{border-bottom:2px solid var(--cobre);padding:30px 0 18px;text-align:center}
+.marca{font-size:clamp(28px,6.5vw,52px);font-weight:800;letter-spacing:.06em;margin:0;line-height:1.05;
+  text-transform:uppercase;color:var(--cobre2)}
+.marca .sub{display:block;font-size:.3em;letter-spacing:.3em;font-weight:500;margin-top:12px;color:var(--texto2)}
+.faixa{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center;
+  font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--texto2);
+  border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);margin-top:16px;padding:9px 0}
+.selo{display:inline-block;background:var(--cobre);color:#141014;font-weight:700;
+  font-size:12.5px;letter-spacing:.14em;padding:6px 14px;border-radius:3px;text-transform:uppercase}
+
+nav.abas{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0 6px}
+nav.abas a{font-size:13.5px;letter-spacing:.05em;text-decoration:none;color:var(--texto);
+  border:1px solid var(--linha);background:var(--grafite2);padding:9px 14px;border-radius:3px}
+nav.abas a.atual{background:var(--cobre);color:#141014;border-color:var(--cobre);font-weight:700}
+nav.abas a:hover{background:var(--grafite3);border-color:var(--cobre)}
+nav.abas a.atual:hover{background:var(--cobre2);color:#141014}
+
+.painel{border:1px solid var(--linha);background:var(--grafite2);padding:13px 15px;margin:20px 0 26px;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-radius:4px}
+.painel .status{font-size:13px;color:var(--texto2)}
+.painel .btns{display:flex;gap:7px;flex-wrap:wrap}
+button{font-size:13.5px;letter-spacing:.03em;cursor:pointer;font-family:inherit;
+  border:1px solid var(--linha);background:var(--grafite3);color:var(--texto);padding:9px 14px;border-radius:3px}
+button:hover{background:var(--cobre);color:#141014;border-color:var(--cobre)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.principal{background:var(--cobre);color:#141014;border-color:var(--cobre);font-weight:700}
+button.principal:hover{background:var(--cobre2)}
+
+.progresso{margin:0 0 26px}
+.barra{height:16px;border:1px solid var(--linha);background:var(--grafite2);border-radius:3px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;transition:width .4s;
+  background:repeating-linear-gradient(45deg,var(--cobre) 0 9px,#a55f2b 9px 18px)}
+.progresso p{font-size:13px;margin:8px 0 0;color:var(--texto2)}
+
+.comofunciona{font-size:15px;background:var(--grafite2);border:1px solid var(--linha);
+  border-left:4px solid var(--cobre);padding:14px 16px;border-radius:4px}
+
+.bloco{border:1px solid var(--linha);background:var(--grafite2);margin:0 0 24px;border-radius:5px;overflow:hidden}
+.bloco.trancado{opacity:.5}
+.bloco > .cab{display:flex;gap:13px;align-items:baseline;flex-wrap:wrap;padding:15px 19px;
+  border-bottom:1px solid var(--linha);background:var(--grafite3)}
+.bloco .num{font-size:12px;letter-spacing:.15em;color:#141014;background:var(--cobre);
+  padding:5px 10px;border-radius:3px;white-space:nowrap;font-weight:700}
+.bloco h2{margin:0;font-size:22px;line-height:1.3;color:var(--cobre2)}
+.bloco .pag{font-size:12px;color:var(--texto2);margin-left:auto;white-space:nowrap}
+.corpo{padding:19px 21px}
+.corpo p{margin:0 0 15px}
+.corpo ul{margin:0 0 15px;padding-left:22px}
+.corpo li{margin-bottom:8px}
+.ex{background:var(--grafite);border-left:4px solid var(--cobre);padding:11px 15px;margin:0 0 15px;font-style:italic}
+.ex b,.ex u{font-style:normal}
+.destaque{background:rgba(207,123,58,.26);padding:1px 5px;border-radius:2px}
+.cadeia{background:var(--grafite);border:1px dashed var(--linha);border-radius:4px;padding:13px 16px;margin:0 0 15px}
+.cadeia div{margin:0 0 7px;font-size:16.5px}
+.cadeia div:last-child{margin:0}
+.cadeia .rot{display:inline-block;background:var(--grafite3);border:1px solid var(--linha);color:var(--cobre2);
+  font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-left:8px}
+table.mini{width:100%;border-collapse:collapse;background:var(--grafite);font-size:16px;margin:0 0 15px}
+table.mini th,table.mini td{border:1px solid var(--linha);padding:9px 11px;text-align:left;vertical-align:top}
+table.mini th{background:var(--grafite3);color:var(--cobre2);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+.perguntas{border-top:1px dashed var(--linha);padding:17px 21px;background:var(--grafite)}
+.perguntas h3{font-size:13px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 13px;color:var(--cobre2)}
+.pergunta{margin:0 0 16px}
+.pergunta label{display:block;font-weight:700;margin-bottom:7px;font-size:17px}
+textarea{width:100%;min-height:76px;font-family:inherit;font-size:16.5px;line-height:1.55;
+  padding:11px;border:1px solid var(--linha);background:var(--grafite2);color:var(--texto);border-radius:3px;resize:vertical}
+textarea:focus{outline:2px solid var(--cobre);outline-offset:1px}
+.aviso{font-size:14px;color:var(--cobre2);margin:0 0 11px;min-height:16px}
+
+.modelo{border-top:1px solid var(--linha);padding:17px 21px;background:rgba(107,154,99,.07)}
+.modelo h4{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 11px;color:var(--musgo)}
+.auto{display:flex;gap:9px;flex-wrap:wrap;align-items:center;border-top:1px dashed var(--linha);padding-top:13px;margin-top:6px}
+
+textarea.verm{border-color:var(--alerta);background:rgba(201,69,63,.12)}
+.avVerm{color:var(--alerta);font-weight:700;font-size:13.5px;margin:7px 0 0}
+.mQ{border-top:1px dashed var(--linha);padding-top:11px;margin-top:11px}
+.mResp{margin:0 0 9px}
+.chkbox{background:var(--grafite2);border:1px solid var(--linha);border-radius:3px;padding:11px 13px}
+.chkTit{margin:0 0 9px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--texto2)}
+.ponto{display:flex;justify-content:space-between;align-items:center;gap:11px;padding:5px 0;font-size:15.5px}
+.pbts{display:flex;gap:6px;flex-shrink:0}
+.btChk{border:1px solid var(--linha);background:var(--grafite3);padding:5px 13px;border-radius:3px;cursor:pointer;font-size:13px}
+.btChk.on{background:var(--musgo);color:#0f140f;border-color:var(--musgo);font-weight:700}
+.btChk.nao.on{background:var(--alerta);border-color:var(--alerta);color:#fff}
+.selo-ok{color:var(--musgo);font-weight:700}
+.selo-rev{color:var(--alerta);font-weight:700}
+.legado{color:var(--texto2);font-size:13px;margin-left:8px}
+.cadeado{padding:17px 21px;font-size:14px;color:var(--texto2)}
+
+.revisar{border:2px solid var(--alerta);background:rgba(201,69,63,.1);border-radius:4px;padding:17px 21px;margin:28px 0}
+.revisar h2{margin:0 0 11px;color:var(--alerta);font-size:22px}
+.revisar li{margin-bottom:7px}
+
+.pegadinhas{border:2px solid var(--alerta);background:rgba(201,69,63,.08);padding:20px 22px;margin:32px 0 24px;border-radius:5px}
+.pegadinhas h2{margin:0 0 14px;color:var(--alerta);font-size:24px}
+.pegadinhas ol{margin:0;padding-left:23px}
+.pegadinhas li{margin-bottom:12px}
+table.cob{width:100%;border-collapse:collapse;background:var(--grafite2);font-size:16px}
+table.cob th,table.cob td{border:1px solid var(--linha);padding:9px 11px;text-align:left}
+table.cob th{background:var(--grafite3);color:var(--cobre2);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+.secao-tit{border-bottom:2px solid var(--cobre);margin:36px 0 17px;padding-bottom:7px;font-size:25px;color:var(--cobre2)}
+.tabela-wrap{overflow-x:auto}
+
+.overlay{position:fixed;inset:0;background:rgba(6,8,11,.78);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.overlay.on{display:flex}
+.modal{background:var(--grafite2);border:2px solid var(--cobre);max-width:440px;width:100%;padding:23px;border-radius:5px}
+.modal h3{margin:0 0 11px;font-size:21px;color:var(--cobre2)}
+.modal p{margin:0 0 17px}
+.modal .acoes{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+
+.rodape{border-top:2px solid var(--cobre);margin-top:36px;padding-top:18px;display:flex;flex-wrap:wrap;
+  gap:13px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--texto2)}
+.rodape a{color:var(--texto);text-decoration:none;border:1px solid var(--linha);background:var(--grafite2);
+  padding:10px 16px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
+.rodape a:hover{background:var(--cobre);color:#141014;border-color:var(--cobre)}
+@media(max-width:620px){body{font-size:17px}.bloco .pag{margin-left:0;width:100%}.ponto{flex-direction:column;align-items:flex-start;gap:6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="topo">
+  <h1 class="marca">Corrente de Memória<span class="sub">Português · 9º ano · Prova de 01/10</span></h1>
+  <div class="faixa">
+    <span>Cap. 17 — Diários de guerra</span><span>·</span>
+    <span>Cap. 18 — Intolerância</span><span>·</span>
+    <span>pp. 17–26 e 41–45</span>
+  </div>
+  <p style="margin:17px 0 0"><span class="selo">Elo 1 — Leitura Guiada</span></p>
+</header>
+
+<nav class="abas">
+  <a href="leitura-guiada.html" class="atual">📖 1. Leitura Guiada</a>
+  <a href="quiz.html">🎯 2. Quiz</a>
+  <a href="resumo.html">🗺️ 3. Resumo</a>
+  <a href="simulado.html">📝 4. Simulado</a>
+  <a href="index.html">🏠 Início</a>
+</nav>
+
+<div class="painel">
+  <div class="status" id="status">Carregando seu progresso…</div>
+  <div class="btns">
+    <button id="btExportar">📥 Exportar</button>
+    <button id="btImportar">📤 Importar</button>
+    <button id="btZerar">🗑️ Zerar tudo</button>
+  </div>
+</div>
+<input type="file" id="arquivo" accept="application/json" style="display:none">
+
+<div class="progresso">
+  <div class="barra"><i id="barra"></i></div>
+  <p id="txtProg">Elo 0 de 11 fechado.</p>
+</div>
+
+<p class="comofunciona">
+<b>Como funciona:</b> uma corrente só segura peso quando cada elo está fechado. Leia o elo,
+<b>escreva</b> as 3 respostas com as <b>suas</b> palavras e clique em <b>Conferir</b>. Só depois disso aparecem
+a resposta modelo e o checklist para você comparar. Se a resposta vier igualzinha ao texto, o material pede para
+reescrever — copiar não fecha elo nenhum. Escrever é o que faz a matéria grudar.
+</p>
+
+<div id="blocos"></div>
+
+<section class="pegadinhas">
+  <h2>⚠️ As 10 pegadinhas desta prova</h2>
+  <ol>
+    <li><b>Dedução e indução andam em sentidos contrários.</b> Dedução vai <u>do geral para o particular</u>; indução vai <u>do particular para o geral</u>. Quem troca os dois erra a questão inteira.</li>
+    <li><b>A conclusão da indução não é garantida.</b> Ela é só provável. Quando alguém transforma dois ou três casos isolados em regra para todo mundo, nasce a <u>generalização preconceituosa</u>.</li>
+    <li><b>“Onde” só vale para LUGAR.</b> “O jogo <s>onde</s> assistimos” está errado: jogo não é lugar, e o verbo assistir pede “a” → <i>a que assistimos / ao qual assistimos</i>.</li>
+    <li><b>Dois lugares na mesma frase deixam “onde” ambíguo.</b> Em “o museu da cidade onde ela se escondeu”, não dá para saber se foi no museu ou na cidade. A saída é o pronome variável: <i>no qual</i> / <i>na qual</i>.</li>
+    <li><b>“Cujo” concorda com o que vem DEPOIS</b> (o possuído), nunca com o possuidor: <i>o escritor <u>cujos livros</u>…</i> — “cujos” concorda com “livros”, não com “escritor”.</li>
+    <li><b>Depois de “cujo” nunca entra artigo.</b> “<s>cuja a</s> vida anterior” está errado; o certo é <i>cuja vida anterior</i>.</li>
+    <li><b>“Cujo” precisa de possuidor antes e possuído depois.</b> “O rapaz <s>cujo</s> estava na escada” está errado: não há nada possuído depois dele.</li>
+    <li><b>“Quem” só retoma pessoa</b> e quase sempre vem com preposição. “Os dados <s>quem</s> apresentamos” está errado → <i>que apresentamos</i>.</li>
+    <li><b>A preposição vem da regência, não do capricho.</b> lembrar-se <u>de</u> → <i>de que</i>; gostar <u>de</u> → <i>de que</i>; referir-se <u>a</u> → <i>a que</i>; desobedecer <u>a</u> → <i>a quem</i>.</li>
+    <li><b>Nem toda oração com pronome relativo é adjetiva.</b> Em “não é ele <u>quem vai lutar</u>”, a oração não caracteriza “ele” — ela é o próprio sujeito. E o critério final entre explicativa e restritiva é o <u>sentido</u> (generalizar ou especificar), não só a vírgula.</li>
+  </ol>
+</section>
+
+<h2 class="secao-tit">🔗 Cobertura: tópico → elo</h2>
+<div class="tabela-wrap">
+<table class="cob">
+  <thead><tr><th>Tópico do escopo</th><th>Páginas</th><th>Elo</th></tr></thead>
+  <tbody>
+    <tr><td>Dedução: premissa, aplicação e conclusão</td><td>17</td><td>Elo 1</td></tr>
+    <tr><td>Indução e generalização preconceituosa</td><td>18</td><td>Elo 2</td></tr>
+    <tr><td>Referentes e coesão no texto</td><td>19</td><td>Elo 3</td></tr>
+    <tr><td>Pronome relativo: função, variáveis e invariáveis</td><td>20</td><td>Elo 4</td></tr>
+    <tr><td>Uso de “que” e “quem”</td><td>20, 25, 26</td><td>Elo 5</td></tr>
+    <tr><td>Uso de “onde” e a ambiguidade</td><td>21, 22, 26</td><td>Elo 6</td></tr>
+    <tr><td>Uso de “cujo” e a concordância da posse</td><td>23–25</td><td>Elo 7</td></tr>
+    <tr><td>“Quando”, “o qual/a qual” e a preposição (regência)</td><td>22, 25</td><td>Elo 8</td></tr>
+    <tr><td>Oração subordinada adjetiva: função e forma</td><td>41</td><td>Elo 9</td></tr>
+    <tr><td>Adjetiva desenvolvida e reduzida</td><td>42</td><td>Elo 10</td></tr>
+    <tr><td>Adjetiva explicativa e restritiva</td><td>42, 44, 45</td><td>Elo 11</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="rodape">
+  <span>Próximo material da sequência →</span>
+  <a href="quiz.html">🎯 Ir para o Quiz</a>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3 id="mTit">Aviso</h3>
+    <p id="mTxt"></p>
+    <div class="acoes">
+      <button id="mNao" style="display:none">Cancelar</button>
+      <button class="principal" id="mSim">Entendi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= DADOS ================= */
+var BLOCOS = [
+{n:1,t:"Dedução: a corrente que vai do geral ao particular",pg:"p. 17",
+ html:`
+ <p>Quando alguém quer convencer outra pessoa, não basta ter razão: é preciso <b>montar um raciocínio que se sustente</b>. É como uma corrente — se um elo estiver frouxo, tudo se solta. O capítulo mostra dois jeitos de montar essa corrente, e o primeiro deles é a <b>dedução</b>.</p>
+ <p>Na dedução, você começa por uma <b>ideia geral</b>, aceita como verdadeira. Essa ideia geral é a <b>premissa</b>. Depois você aplica essa premissa a um <b>caso particular</b>. E aí a <b>conclusão</b> vem sozinha: ela não é opinião, é consequência.</p>
+ <div class="cadeia">
+   <div><b>I.</b> Vacinas protegem contra doenças. <span class="rot">princípio geral · premissa</span></div>
+   <div><b>II.</b> O pai tomou a vacina contra essas doenças. <span class="rot">aplicação particular</span></div>
+   <div><b>III.</b> Logo, o pai está protegido dessas doenças. <span class="rot">conclusão lógica</span></div>
+ </div>
+ <p>Repare no caminho: sai-se de uma ideia ampla (todas as vacinas, todas as pessoas) e chega-se a um caso pontual (esse pai, essas doenças). Por isso se diz que a dedução vai <span class="destaque">do geral para o particular</span>.</p>
+ <p>A força da dedução está numa regra simples: <b>se a premissa for mesmo verdadeira, a conclusão não tem como ser falsa</b>. É por isso que ela convence tanto. O perigo, claro, é começar com uma premissa furada — aí a corrente inteira vem abaixo, por mais bem montada que pareça.</p>`,
+ q:["Com suas palavras, o que caracteriza um raciocínio dedutivo?",
+    "Monte uma dedução SUA, em três passos (premissa geral, aplicação particular e conclusão), sobre algo do seu dia a dia.",
+    "Leia esta sequência: “I. Todo material reciclável pode ser reaproveitado. II. Esta garrafa PET é reciclável. III. Logo, esta garrafa PET pode ser reaproveitada.” Diga qual é o papel de cada passo e se o raciocínio é dedutivo."],
+ a:["A dedução parte de uma ideia geral aceita como verdadeira (a premissa), aplica essa ideia a um caso particular e chega a uma conclusão que decorre dela. Se a premissa for verdadeira, a conclusão também será.",
+    "Resposta pessoal. Ex.: I. Todo aluno que falta a mais de 25% das aulas fica de recuperação. II. Faltei a mais de 25% das aulas. III. Logo, vou ficar de recuperação.",
+    "I é o princípio geral (a premissa); II é a aplicação particular dessa premissa; III é a conclusão lógica. Sim, o raciocínio é dedutivo, porque vai do geral para o particular."]},
+
+{n:2,t:"Indução: do caso isolado para a regra (e o risco do elo frouxo)",pg:"p. 18",
+ html:`
+ <p>O segundo jeito de montar a corrente faz o caminho contrário. Na <b>indução</b>, parte-se de um ou de poucos <b>casos particulares</b> e propõe-se, a partir deles, uma <b>regra geral</b>. É o que fazemos o tempo todo na vida prática: comi duas vezes naquele lugar e passei mal, então concluo que a comida de lá faz mal.</p>
+ <div class="cadeia">
+   <div><b>I.</b> O pai está levando um monte de remédios. <span class="rot">caso particular</span></div>
+   <div><b>II.</b> Várias doenças são tratáveis com remédios. <span class="rot">premissa</span></div>
+   <div><b>III.</b> Logo, nenhuma doença prejudicaria o pai. <span class="rot">generalização questionável</span></div>
+ </div>
+ <p>Percebeu o problema? Levar muitos remédios não protege ninguém: pode aparecer uma doença desconhecida, para a qual não há remédio na mala. A conclusão da indução é <b>provável</b>, nunca garantida — e é exatamente aí que mora a diferença para a dedução.</p>
+ <p>Quando a indução é feita sem cuidado, ela vira o que o capítulo chama de <b>generalização preconceituosa</b>: dois casos isolados viram carimbo para um grupo inteiro.</p>
+ <div class="cadeia">
+   <div><b>I.</b> Roberto não para a moto no sinal vermelho.</div>
+   <div><b>II.</b> Paulo anda de moto na contramão.</div>
+   <div><b>III.</b> Logo, todo motociclista desrespeita o trânsito. <span class="rot">generalização preconceituosa</span></div>
+ </div>
+ <p>Por isso o livro avisa: ao escrever textos de opinião, <span class="destaque">verifique se a sua argumentação parte de premissas verdadeiras</span>. Um argumento construído sobre um caso isolado até parece forte, mas não convence um leitor atento — e pode ofender gente que não tem nada a ver com a história.</p>`,
+ q:["Qual é a diferença entre dedução e indução?",
+    "Escreva uma indução SUA, a partir de dois casos particulares, e explique por que a conclusão dela pode não ser verdadeira.",
+    "Leia: “I. O vizinho do 3º andar chegou tarde ontem. II. O vizinho do 3º andar chegou tarde hoje. III. Logo, todo mundo daquele prédio chega tarde.” Explique o problema dessa conclusão e reescreva o passo III de um jeito honesto."],
+ a:["A dedução vai do geral para o particular e, se a premissa for verdadeira, a conclusão é garantida. A indução vai de casos particulares para uma regra geral, e sua conclusão é apenas provável — pode estar errada.",
+    "Resposta pessoal. Ex.: I. A prova de segunda foi difícil. II. A prova de quarta foi difícil. III. Logo, todas as provas deste bimestre serão difíceis. A conclusão pode falhar porque dois casos não representam todas as provas do bimestre.",
+    "O problema é que dois dias de observação de UMA pessoa não autorizam a falar de todos os moradores: é uma generalização questionável. Passo III honesto: “Logo, esse vizinho tem chegado tarde nos últimos dias.”"]},
+
+{n:3,t:"Referentes: as palavras que puxam o elo anterior",pg:"p. 19",
+ html:`
+ <p>Agora a corrente muda de assunto: sai do raciocínio e entra no texto. Um texto bem escrito não repete a mesma palavra a cada duas linhas. Em vez disso, ele usa palavras que <b>retomam</b> o que já foi dito. Essas palavras que voltam para pegar algo anterior são os <b>referentes</b> — e o que elas retomam é chamado de <b>antecedente</b>.</p>
+ <div class="ex">“[…] colhi três ramos e fixei-<b>os</b> sobre minha cama.” → <b>os</b> retoma “três ramos”.</div>
+ <div class="ex">“<b>Ela</b> acha que <b>ele</b> poderá <b>me</b> interessar quando <b>eu</b> for mais velha.” → ela = a mãe; ele = o diário; me e eu = quem escreve.</div>
+ <p>Quem faz esse trabalho na maioria das vezes são os <b>pronomes</b>. Sem eles, o texto ficaria assim: “colhi três ramos e fixei os três ramos sobre a cama”. Funciona? Funciona. Mas fica pobre e cansativo. Os referentes garantem a <b>coesão</b>: as partes do texto ficam presas umas às outras, e quem lê não se perde.</p>
+ <p>Só que existe um cuidado. Quando o referente é vago demais, o leitor precisa parar e adivinhar. É o caso de expressões genéricas como “aquilo que”: <span class="destaque">elas não apontam para um nome específico, e por isso o referente fica difícil de identificar</span>. O mesmo acontece quando há dois candidatos possíveis na frase — e aí nasce a ambiguidade, assunto que volta no Elo 6.</p>`,
+ q:["Por que os referentes são importantes em um texto?",
+    "Reescreva eliminando as repetições: “Minha avó guardou as cartas. Minha avó leu as cartas todo fim de tarde.” Depois diga o que cada palavra que você usou está retomando.",
+    "Em “A professora entregou o diário à aluna, mas ela não quis abri-lo”, explique por que o pronome “ela” gera dúvida e proponha uma reescrita que resolva o problema."],
+ a:["Porque eles retomam termos já ditos, evitam a repetição da mesma palavra e garantem a coesão do texto: quem lê continua sabendo de quem ou do que se fala.",
+    "Resposta pessoal. Ex.: “Minha avó guardou as cartas e as leu todo fim de tarde.” O “as” retoma “as cartas”, e o sujeito oculto retoma “minha avó”.",
+    "Porque “ela” pode se referir tanto à professora quanto à aluna: as duas são femininas e singulares. Uma reescrita possível: “A professora entregou o diário à aluna, mas a menina não quis abri-lo.”"]},
+
+{n:4,t:"Pronome relativo: o elo que evita a repetição",pg:"p. 20",
+ html:`
+ <p>Os <b>pronomes</b> são palavras variáveis que enunciam as pessoas do discurso e estabelecem relações entre os termos de um texto. Eles podem ser pessoais, demonstrativos, indefinidos, interrogativos, possessivos — e <b>relativos</b>, que são o assunto desta prova.</p>
+ <p>O <b>pronome relativo</b> tem uma missão bem definida: <b>retomar um nome já dito antes</b> e, ao mesmo tempo, <b>emendar duas orações numa só</b>. Ele é literalmente o elo da corrente.</p>
+ <div class="ex">Sem o elo: O país entrou em guerra. <b>Eu nasci nesse país.</b> → repetição empobrecedora.</div>
+ <div class="ex">Com o elo: O país <b>onde</b> nasci entrou em guerra. → o pronome evita a repetição.</div>
+ <p>O nome que o pronome relativo retoma chama-se <b>antecedente</b> (no exemplo, “o país”). Achar o antecedente é o primeiro passo de qualquer questão sobre o assunto: é ele que manda na escolha do pronome e na concordância.</p>
+ <p>Os pronomes relativos se dividem em dois grupos. Os <b>variáveis</b> mudam de gênero e número para concordar; os <b>invariáveis</b> têm sempre a mesma forma.</p>
+ <table class="mini">
+   <thead><tr><th>Variáveis</th><th>Invariáveis</th></tr></thead>
+   <tbody><tr>
+     <td>o qual, a qual, os quais, as quais<br>cujo, cuja, cujos, cujas<br>quanto, quanta, quantos, quantas</td>
+     <td>que, quem, onde, como, quando</td>
+   </tr></tbody>
+ </table>
+ <p><span class="destaque">Vale decorar essa tabela</span> — questão de prova adora pedir para separar os dois grupos, e o erro mais comum é colocar “que” entre os variáveis só porque ele aparece em toda frase.</p>`,
+ q:["O que um pronome relativo faz dentro de um texto?",
+    "Junte as duas frases num período só, usando um pronome relativo, e diga qual é o antecedente: “Guardei o caderno. O caderno pertenceu ao meu bisavô.”",
+    "Escreva três pronomes relativos variáveis e três invariáveis e explique, com suas palavras, o que significa “variável” nesse caso."],
+ a:["Ele retoma um nome já mencionado antes (o antecedente) e liga duas orações numa só, evitando que a mesma palavra seja repetida.",
+    "“Guardei o caderno que pertenceu ao meu bisavô.” O antecedente é “o caderno”.",
+    "Variáveis: o qual / a qual, cujo / cuja, quanto / quanta. Invariáveis: que, quem, onde (também valem como e quando). “Variável” quer dizer que o pronome muda de gênero e de número para concordar com a palavra a que se liga."]},
+
+{n:5,t:"“Que” e “quem”: os elos mais usados",pg:"pp. 20, 25 e 26",
+ html:`
+ <p>O <b>“que”</b> é o curinga da turma: serve para retomar <b>pessoas e coisas</b>, no singular e no plural, e é de longe o mais frequente. Por isso ele aparece em quase toda oração adjetiva do Capítulo 18.</p>
+ <div class="ex">O diário <b>que</b> ela escreveu virou livro. · A menina <b>que</b> escreveu o diário tinha onze anos.</div>
+ <p>Só que existe uma armadilha: nem todo “que” é pronome relativo. Ele só é relativo <b>quando retoma um nome que veio antes</b> e pode ser trocado por “o qual / a qual”. Quando o “que” apenas emenda uma declaração (“Ele disse <i>que</i> viria”), é conjunção — não retoma nada, não tem antecedente.</p>
+ <p>Já o <b>“quem”</b> é muito mais exigente. Ele retoma <b>apenas pessoas</b> e, na prática, quase sempre vem <b>precedido de preposição</b>.</p>
+ <div class="ex">Este é o amigo <b>com quem</b> eu estudo. · A moça <b>de quem</b> te falei chegou. · O superior <b>a quem</b> ele desobedeceu ficou bravo.</div>
+ <p>Daí o erro da página 25: “Os dados <b>quem</b> apresentamos convenceram os acionistas”. Dados não são pessoas, e não há preposição nenhuma ali. <span class="destaque">O certo é “Os dados que apresentamos”.</span> Teste rápido: se o antecedente não for gente, “quem” está fora da jogada.</p>`,
+ q:["Qual é a diferença de uso entre “que” e “quem” como pronomes relativos?",
+    "Corrija e justifique: “As testemunhas quem o juiz ouviu chegaram cedo.”",
+    "Escreva duas frases SUAS: uma com “que” retomando uma coisa e outra com “quem” precedido de preposição retomando uma pessoa."],
+ a:["O “que” retoma tanto pessoas quanto coisas e é o mais usado. O “quem” retoma apenas pessoas e quase sempre aparece precedido de preposição.",
+    "O certo é “As testemunhas que o juiz ouviu chegaram cedo.” O pronome “quem” pede preposição, e o verbo ouvir não exige preposição nenhuma aqui — por isso cabe “que”.",
+    "Resposta pessoal. Ex.: “Perdi o livro que minha tia me deu.” / “Aquele é o professor de quem todos gostam.”"]},
+
+{n:6,t:"“Onde”: o elo que só serve para lugar",pg:"pp. 21, 22 e 26",
+ html:`
+ <p>O <b>“onde”</b> é um pronome relativo invariável com uma regra de ouro: o antecedente dele tem de ser um <b>lugar</b>. Ele equivale a <b>“em que”</b>.</p>
+ <div class="ex">Ando pelas ruas de Moscou, <b>onde</b> passei tantas horas. → onde = em que (na cidade).</div>
+ <p>Quando o antecedente não é lugar, “onde” está errado. É o caso do exemplo da página 25: “O jogo <b>onde</b> assistimos foi prejudicado”. Jogo não é lugar; além disso o verbo assistir, no sentido de ver, pede a preposição “a”. <span class="destaque">O certo é “O jogo a que assistimos” ou “ao qual assistimos”.</span></p>
+ <p>Existe ainda um segundo problema, mais fino, que a prova adora: a <b>ambiguidade</b>. Quando a frase menciona <b>dois lugares</b>, “onde” não deixa claro a qual deles se refere.</p>
+ <div class="ex">Visitamos o museu da cidade <b>onde</b> Anne Frank ficou escondida. → foi no museu ou na cidade?</div>
+ <p>Como o “onde” é invariável, ele não dá nenhuma pista de gênero. A solução é trocá-lo por um pronome <b>variável</b>, que concorda e aponta com precisão:</p>
+ <div class="ex">Visitamos o museu da cidade <b>no qual</b> Anne Frank ficou escondida. → no museu.<br>
+ Visitamos o museu da cidade <b>na qual</b> Anne Frank ficou escondida. → na cidade.</div>
+ <p>Guarde a lógica: “no qual” é masculino e aponta para “museu”; “na qual” é feminino e aponta para “cidade”. É a concordância resolvendo a dúvida.</p>`,
+ q:["Quando o pronome relativo “onde” pode ser usado?",
+    "Aponte o erro e reescreva: “A reunião onde participei durou três horas.”",
+    "Em “Visitei a biblioteca da escola onde meu pai estudou”, explique por que a frase é ambígua e reescreva-a de modo a deixar claro que ele estudou na ESCOLA."],
+ a:["Só quando o antecedente for um lugar, e quando ele puder ser substituído por “em que”.",
+    "Dois problemas: “reunião” não é lugar e o verbo participar exige a preposição “de”. O certo é “A reunião de que participei durou três horas” (ou “da qual participei”).",
+    "É ambígua porque “onde” pode apontar tanto para a biblioteca quanto para a escola. Para deixar claro que foi na escola: “Visitei a biblioteca da escola na qual meu pai estudou.”"]},
+
+{n:7,t:"“Cujo”: o elo da posse",pg:"pp. 23 a 25",
+ html:`
+ <p>O <b>“cujo”</b> é o pronome relativo mais temido — e o mais previsível, depois que se entende o mecanismo. Ele indica <b>posse</b>: liga um <b>possuidor</b> (que vem antes) a um <b>possuído</b> (que vem depois).</p>
+ <div class="ex">… uma jovem de dezessete anos <b>cuja</b> vida anterior era serena.<br>possuidor: <b>a jovem</b> · possuído: <b>vida</b></div>
+ <p>E aqui está o detalhe que derruba gente boa: <b>“cujo” concorda com o possuído</b>, ou seja, com a palavra que vem <b>depois</b> dele — nunca com o possuidor. No exemplo, ficou “cuja” porque “vida” é feminino singular, e não porque “jovem” é feminino.</p>
+ <div class="ex">Conheci o escritor <b>cujos</b> livros foram traduzidos. → “cujos” concorda com <b>livros</b> (masculino plural).<br>
+ Conheci a escritora <b>cujo</b> diário virou filme. → “cujo” concorda com <b>diário</b> (masculino singular).</div>
+ <p>Duas regras completam o pacote:</p>
+ <ul>
+   <li><b>Nunca use artigo depois de “cujo”.</b> “cuja <s>a</s> vida anterior” está errado. O “cujo” já traz gênero e número embutidos; o artigo fica sobrando.</li>
+   <li><b>Sem possuído, não há “cujo”.</b> “O rapaz <b>cujo</b> estava na escada portava uma arma” está errado, porque depois de “cujo” não veio nada possuído. O certo seria <i>O rapaz que estava na escada…</i></li>
+ </ul>
+ <p><span class="destaque">Teste infalível:</span> troque “cujo” por “de quem / do qual” e veja se a posse continua fazendo sentido. “o escritor cujos livros” = “os livros do qual escritor” → tem posse, está correto.</p>`,
+ q:["Com qual palavra o pronome “cujo” concorda?",
+    "Complete e justifique a flexão: “Conheci o escritor ______ obras foram traduzidas para dez línguas.”",
+    "Explique para um colega mais novo, com um exemplo seu, por que “O rapaz cujo estava na escada portava uma arma” está errado."],
+ a:["Com o termo possuído, isto é, com a palavra que vem logo depois dele — e não com o possuidor.",
+    "“cujas”. A concordância é feita com “obras”, que é feminino plural (o possuído), e não com “escritor”.",
+    "Resposta pessoal. A explicação é que “cujo” sempre liga um dono ao que pertence a ele, e depois de “cujo” precisa aparecer a coisa possuída. Na frase não há nada possuído, só o verbo. Ex. correto: “O rapaz cuja arma estava na escada foi detido” — ou simplesmente “O rapaz que estava na escada portava uma arma.”"]},
+
+{n:8,t:"“Quando”, “o qual” e a preposição que vem antes",pg:"pp. 22 e 25",
+ html:`
+ <p>Falta fechar dois elos mais finos. O primeiro é o <b>“quando”</b>, que tem duas vidas:</p>
+ <ul>
+   <li>é <b>pronome relativo</b> quando tem um <b>antecedente nominal imediato</b> e pode ser trocado por <b>“em que”</b>: <i>Lembro do ano <b>quando</b> tudo mudou</i> = <i>o ano <b>em que</b> tudo mudou</i>;</li>
+   <li>é <b>conjunção subordinativa adverbial temporal</b> quando apenas <b>inicia uma oração de tempo</b>, sem retomar nome nenhum: <i>Antigamente, <b>quando</b> éramos algo parecido com uma “grande família”, havia uma bandeja de prata na sala.</i></li>
+ </ul>
+ <p>Nesse segundo exemplo, a palavra que vem antes é “antigamente” — um advérbio, não um nome. Sem antecedente nominal, <span class="destaque">não há pronome relativo: é conjunção temporal</span>.</p>
+ <p>O segundo elo é a <b>preposição</b> que aparece colada ao pronome, como em “na qual”. Ela não surge do nada: quem manda nela é a <b>regência</b> do verbo ou do termo anterior.</p>
+ <div class="ex">… havia uma bandeja de prata <b>na qual</b> os visitantes deixavam seus cartões.<br>
+ Deixavam os cartões <b>em</b> quê? <b>Na</b> bandeja. → em + a qual = <b>na qual</b> (poderia ser “em que”).</div>
+ <p>Por isso as lacunas da página 22 caem sempre no mesmo raciocínio: pergunte qual preposição o verbo pede e cole-a no pronome.</p>
+ <table class="mini">
+   <thead><tr><th>O verbo pede…</th><th>Fica assim</th></tr></thead>
+   <tbody>
+     <tr><td>viver <b>em</b></td><td>O século <b>em que</b> vivemos…</td></tr>
+     <tr><td>referir-se <b>a</b></td><td>A lei <b>a que</b> se referiu…</td></tr>
+     <tr><td>gostar <b>de</b></td><td>O filme <b>de que</b> mais gosto…</td></tr>
+     <tr><td>ansiar <b>por</b></td><td>A notícia <b>pela qual</b> todos ansiavam…</td></tr>
+     <tr><td>desobedecer <b>a</b></td><td>O superior <b>a quem</b> desobedeceu…</td></tr>
+   </tbody>
+ </table>
+ <p>E cuidado com o clássico “Os números <b>que</b> nos lembramos”: lembrar-se pede “de”, então o certo é <b>de que</b> (ou <b>dos quais</b>).</p>`,
+ q:["Como saber se “quando” é pronome relativo ou conjunção subordinativa adverbial temporal?",
+    "Em “Este é o assunto ______ mais gosto”, qual forma completa a lacuna e por quê?",
+    "Reescreva num período só, usando “o qual” ou “a qual” com preposição: “Comprei a estante. Coloquei os diários na estante.”"],
+ a:["Se houver um nome logo antes dele e ele puder ser trocado por “em que”, é pronome relativo. Se ele apenas abrir uma oração que indica tempo, sem retomar nome nenhum, é conjunção subordinativa adverbial temporal.",
+    "“de que” (ou “do qual”), porque o verbo gostar exige a preposição “de”: quem gosta, gosta DE alguma coisa.",
+    "“Comprei a estante na qual coloquei os diários.” A preposição “em” vem do verbo colocar (colocar EM), e “em + a qual” resulta em “na qual”."]},
+
+{n:9,t:"Oração subordinada adjetiva: o elo que caracteriza",pg:"p. 41",
+ html:`
+ <p>Agora o Capítulo 18 pega o pronome relativo e mostra o que ele constrói: a <b>oração subordinada adjetiva</b>. O nome já entrega tudo — ela é uma oração inteira funcionando como se fosse um <b>adjetivo</b>.</p>
+ <div class="ex">Ali está a foto da garota <b>famosa</b>. <span class="rot">adjetivo</span><br>
+ Ali está a foto da garota <b>que ficou famosa por causa de seu diário</b>. <span class="rot">oração de valor adjetivo</span></div>
+ <p>Nos dois casos, quem é caracterizado é o substantivo “garota”. A diferença é que, na segunda frase, a caracterização vem em forma de oração, com verbo e tudo. É por isso que ela se chama <b>adjetiva</b>: pelo valor, pela função que exerce.</p>
+ <p>Quanto à <b>forma</b>, três pontos importam:</p>
+ <ul>
+   <li>ela se <b>intercala</b> à oração principal, caracterizando um dos nomes que estão nela (um substantivo ou um pronome substantivado);</li>
+   <li>ela é <b>subordinada</b>: depende diretamente da principal para ter sentido e estrutura completos — sozinha, não se sustenta;</li>
+   <li>quando é <b>desenvolvida</b>, entra no período por meio de um <b>pronome relativo</b>.</li>
+ </ul>
+ <div class="ex">O museu <b>que</b> reconstrói cenas do Holocausto fica em São Paulo. <span class="rot">o antecedente é um nome</span><br>
+ O museu <b>onde</b> conheci a história de Anne Frank fica em São Paulo. <span class="rot">pronome relativo de lugar</span></div>
+ <p><span class="destaque">Pergunta que resolve a maioria das questões:</span> essa oração está dizendo <i>como é</i> alguém ou alguma coisa citada antes? Se sim, é adjetiva — e o nome caracterizado é o antecedente do pronome relativo.</p>`,
+ q:["Por que essa oração recebe o nome de “adjetiva”?",
+    "Troque o adjetivo por uma oração adjetiva: “Li o diário emocionante.”",
+    "Em “O menino que morava no abrigo escreveu um diário”, aponte a oração adjetiva e diga qual substantivo ela caracteriza."],
+ a:["Porque ela tem o mesmo valor de um adjetivo: caracteriza um substantivo (um nome) que aparece na oração principal.",
+    "Resposta pessoal. Ex.: “Li o diário que me emocionou do começo ao fim.” A oração continua caracterizando o substantivo “diário”.",
+    "A oração adjetiva é “que morava no abrigo”, e ela caracteriza o substantivo “o menino”."]},
+
+{n:10,t:"Desenvolvida ou reduzida: com elo à vista ou sem elo",pg:"p. 42",
+ html:`
+ <p>As orações adjetivas aparecem de duas maneiras, e a prova cobra a diferença com exemplos curtos.</p>
+ <p>A <b>desenvolvida</b> é a forma completa: tem um <b>conectivo</b> (o pronome relativo) e um <b>verbo conjugado</b>. O elo está à vista.</p>
+ <div class="ex">Visitei o museu <b>que foi inaugurado</b> em São Paulo. <span class="rot">conectivo: que · verbo: foi</span></div>
+ <p>A <b>reduzida</b> é a forma enxuta: <b>não tem conectivo</b> nenhum, e o verbo aparece numa <b>forma nominal</b> — infinitivo, gerúndio ou particípio. O elo some, mas o sentido de caracterização continua lá.</p>
+ <table class="mini">
+   <thead><tr><th>Forma nominal</th><th>Reduzida</th><th>Equivale a</th></tr></thead>
+   <tbody>
+     <tr><td>Particípio</td><td>Visitei o museu <b>inaugurado</b> em São Paulo.</td><td>que se inaugurou</td></tr>
+     <tr><td>Gerúndio</td><td>São retratadas pessoas <b>sofrendo</b> com a guerra.</td><td>que sofreram</td></tr>
+     <tr><td>Infinitivo</td><td>As cenas evocam situações <b>de arrepiar</b>.</td><td>que arrepiam</td></tr>
+   </tbody>
+ </table>
+ <p>Reconhecer a forma nominal é o atalho: <b>-ado / -ido</b> costuma ser particípio; <b>-ndo</b> é gerúndio; <b>-ar / -er / -ir</b> é infinitivo. Depois é só desenvolver: coloque um pronome relativo na frente e conjugue o verbo.</p>
+ <p><span class="destaque">Atenção à pegadinha:</span> a oração reduzida continua sendo adjetiva, mesmo sem pronome relativo. O que define a classificação é a <b>função</b> (caracterizar um nome), não a presença do conectivo.</p>`,
+ q:["O que diferencia uma oração adjetiva desenvolvida de uma reduzida?",
+    "Em “Vi as cartas guardadas no sótão”, diga em que forma nominal está a reduzida e transforme-a em desenvolvida.",
+    "Em “Havia crianças brincando no pátio do abrigo”, classifique a forma nominal e transforme a oração em desenvolvida."],
+ a:["A desenvolvida tem conectivo (um pronome relativo) e verbo conjugado. A reduzida não tem conectivo, e o verbo está no infinitivo, no gerúndio ou no particípio.",
+    "“Guardadas” está no particípio. Desenvolvida: “Vi as cartas que estavam guardadas no sótão.”",
+    "“Brincando” está no gerúndio. Desenvolvida: “Havia crianças que brincavam no pátio do abrigo.”"]},
+
+{n:11,t:"Explicativa ou restritiva: a vírgula que muda tudo",pg:"pp. 42, 44 e 45",
+ html:`
+ <p>Último elo, e o mais cobrado. Toda oração adjetiva pode ser classificada de dois jeitos, e a diferença entre eles muda o sentido da frase inteira.</p>
+ <p>A <b>explicativa</b> vem <b>entre vírgulas</b>. Ela acrescenta uma característica que já é própria do substantivo, algo que vale para <b>todos</b> os elementos daquele grupo. Ela <b>generaliza</b>.</p>
+ <div class="ex">Os museus, <b>que abrigam relatos e objetos</b>, são essenciais para a História.<br>→ todo museu abriga relatos e objetos. A informação apenas reforça algo já esperado.</div>
+ <p>A <b>restritiva</b> vem <b>sem vírgulas</b>. Ela delimita, restringe, separa <b>uma parte</b> do grupo. Ela <b>especifica</b>.</p>
+ <div class="ex">O museu <b>que recupera cenas do Holocausto</b> impactou a minha vida.<br>→ não é qualquer museu: é aquele, especificamente.</div>
+ <p>Agora o ponto que o livro faz questão de destacar: <span class="destaque">a vírgula é a marca, mas o critério é o SENTIDO</span> — generalizar ou especificar.</p>
+ <div class="ex">O homem, <b>que semeia guerras</b>, espalha a própria destruição. <span class="rot">explicativa: todo homem faz isso</span><br>
+ O homem <b>que semeia guerras</b> espalha a própria destruição. <span class="rot">restritiva: só esse tipo de homem</span></div>
+ <p>O mesmo vale para o exemplo da página 45: em “Os países<b>,</b> que aderiram ao acordo<b>,</b> dispensaram os soldados”, todos os países aderiram — daí se conclui, sem discussão, que a guerra acabou. Já em “Os países que aderiram ao acordo dispensaram os soldados”, só uma parte deles aderiu, e os outros podem continuar em guerra.</p>
+ <p>Para fechar, a <b>análise completa</b> de “que ficou famosa por causa de seu diário”: é <b>oração</b>, porque tem verbo; é <b>subordinada</b>, porque exerce função em relação à principal; é <b>adjetiva</b>, porque caracteriza um nome; é <b>explicativa</b>, porque esclarece uma característica própria do substantivo; e é <b>desenvolvida</b>, porque tem conectivo (“que”) e verbo conjugado (“ficou”).</p>
+ <p>E a última pegadinha do capítulo: nem toda oração introduzida por pronome relativo é adjetiva. Em “<i>não é ele <b>quem vai lutar</b></i>”, a oração não caracteriza “ele” — ela é o próprio sujeito. Invertendo, fica claro: “Quem vai lutar não é ele.”</p>`,
+ q:["Qual é a diferença de sentido entre a oração adjetiva explicativa e a restritiva?",
+    "Explique a diferença de sentido entre estas duas frases: “Os alunos, que entregaram o trabalho, receberam o certificado.” e “Os alunos que entregaram o trabalho receberam o certificado.”",
+    "Escreva uma frase SUA com uma adjetiva explicativa e depois transforme-a em restritiva, dizendo o que mudou no sentido."],
+ a:["A explicativa vem entre vírgulas e acrescenta uma característica que vale para todos os elementos do grupo: ela generaliza. A restritiva vem sem vírgulas e delimita apenas parte do grupo: ela especifica.",
+    "Na primeira, com vírgulas, a oração é explicativa: todos os alunos entregaram o trabalho e todos receberam o certificado. Na segunda, sem vírgulas, é restritiva: apenas os alunos que entregaram receberam o certificado — os outros não.",
+    "Resposta pessoal. Ex.: “Meus primos, que moram no interior, vieram à festa.” (explicativa: todos os primos moram no interior e todos vieram). Sem as vírgulas — “Meus primos que moram no interior vieram à festa” — vira restritiva: só a parte dos primos que mora no interior veio; os demais não."]}
+];
+
+/* ===== ANTICÓPIA + CHECKLIST ===== */
+var PONTOS=[
+[["que parte de uma ideia geral (a premissa) e chega a um caso particular","que, se a premissa for verdadeira, a conclusão também é"],
+ ["escrevi uma premissa geral MINHA","apliquei a um caso particular e fechei com a conclusão"],
+ ["I = premissa/princípio geral; II = aplicação particular; III = conclusão","que o raciocínio é dedutivo (vai do geral para o particular)"]],
+
+[["que a dedução vai do geral para o particular","que a indução vai de casos particulares para uma regra geral","que a conclusão da indução é só provável, não garantida"],
+ ["parti de dois casos particulares MEUS","expliquei por que a conclusão pode falhar"],
+ ["que dois dias de UMA pessoa não autorizam falar de todo o prédio","reescrevi o passo III limitando o alcance"]],
+
+[["que retomam termos já ditos e evitam repetir a mesma palavra","que garantem a coesão: quem lê não se perde"],
+ ["reescrevi sem repetir “minha avó” e “as cartas”","disse o que cada palavra usada está retomando"],
+ ["que “ela” pode ser a professora ou a aluna (ambíguo)","propus uma reescrita que deixa claro quem não quis abrir"]],
+
+[["que retoma um nome já dito antes (o antecedente)","que liga duas orações e evita a repetição"],
+ ["escrevi um período só com pronome relativo","apontei “o caderno” como antecedente"],
+ ["variáveis: o qual/a qual, cujo/cuja, quanto/quanta","invariáveis: que, quem, onde (ou como, quando)","que variável é o que muda de gênero e número"]],
+
+[["que “que” serve para pessoas e coisas","que “quem” serve só para pessoas e quase sempre vem com preposição"],
+ ["que o certo é “As testemunhas QUE o juiz ouviu”","que “quem” pede preposição e o verbo ouvir não exige preposição aqui"],
+ ["escrevi uma frase MINHA com “que” retomando uma coisa","escrevi outra com preposição + “quem” retomando uma pessoa"]],
+
+[["só quando o antecedente for um LUGAR","quando puder ser trocado por “em que”"],
+ ["que “reunião” não é lugar","que o verbo participar pede a preposição “de” → “de que” ou “da qual”"],
+ ["que “onde” pode apontar para a biblioteca ou para a escola","usei “na qual” (feminino) para apontar a escola"]],
+
+[["com o termo POSSUÍDO, o que vem depois dele","não com o possuidor"],
+ ["“cujas”","porque concorda com “obras”, feminino plural, e não com “escritor”"],
+ ["que falta a coisa possuída depois de “cujo”","dei um exemplo corrigido (com possuído depois ou trocando por “que”)"]],
+
+[["se tiver um nome antes e puder virar “em que”, é pronome relativo","se apenas abrir uma oração de tempo, é conjunção subordinativa adverbial temporal"],
+ ["“de que” (ou “do qual”)","porque o verbo gostar exige a preposição “de”"],
+ ["escrevi um período só (ex.: “a estante na qual coloquei os diários”)","expliquei que o “em” vem do verbo colocar → em + a qual = na qual"]],
+
+[["porque tem o mesmo valor de um adjetivo","porque caracteriza um substantivo da oração principal"],
+ ["escrevi uma oração no lugar do adjetivo","mantive a caracterização do substantivo “diário”"],
+ ["a oração é “que morava no abrigo”","ela caracteriza o substantivo “o menino”"]],
+
+[["desenvolvida: tem conectivo (pronome relativo) e verbo conjugado","reduzida: sem conectivo, verbo no infinitivo, gerúndio ou particípio"],
+ ["que “guardadas” está no PARTICÍPIO","desenvolvida: “que estavam guardadas no sótão”"],
+ ["que “brincando” está no GERÚNDIO","desenvolvida: “que brincavam no pátio do abrigo”"]],
+
+[["explicativa: entre vírgulas, vale para todos do grupo (generaliza)","restritiva: sem vírgulas, delimita só parte do grupo (especifica)"],
+ ["na 1ª (com vírgulas), TODOS os alunos entregaram e todos receberam","na 2ª (sem vírgulas), só os que entregaram receberam"],
+ ["escrevi uma frase MINHA com vírgulas (explicativa)","tirei as vírgulas e expliquei que agora só parte do grupo é atingida"]]
+];
+
+function normTxt(s){s=(s||'').toLowerCase();try{s=s.normalize('NFD').replace(/[̀-ͯ]/g,'')}catch(e){}return s.replace(/[^a-z0-9\s]+/g,' ').replace(/\s+/g,' ').trim();}
+var TXTN=BLOCOS.map(function(b){var d=document.createElement('div');d.innerHTML=b.html;return normTxt(d.textContent||d.innerText||'').split(' ');});
+function analisaRuns(rw,bw){
+  var pos={},i2;for(i2=0;i2<bw.length;i2++){(pos[bw[i2]]=pos[bw[i2]]||[]).push(i2);}
+  var i=0,maxRun=0,cob=0,n=rw.length;
+  while(i<n){
+    var best=0,ps=pos[rw[i]]||[];
+    for(var a=0;a<ps.length;a++){var k=0;while(i+k<n&&bw[ps[a]+k]===rw[i+k])k++;if(k>best)best=k;}
+    if(best>maxRun)maxRun=best;
+    if(best>=5){cob+=best;i+=best;}else i++;
+  }
+  return {maxRun:maxRun,cob:cob,n:n};
+}
+var QTXT=BLOCOS.map(function(b){return b.q.map(function(q){return normTxt(q).split(' ');});});
+function tiraCitacao(rw,qw){
+  var pos={},i2;for(i2=0;i2<qw.length;i2++){(pos[qw[i2]]=pos[qw[i2]]||[]).push(i2);}
+  var out=[],i=0;
+  while(i<rw.length){
+    var best=0,ps=pos[rw[i]]||[];
+    for(var a=0;a<ps.length;a++){var k=0;while(i+k<rw.length&&qw[ps[a]+k]===rw[i+k])k++;if(k>best)best=k;}
+    if(best>=4){i+=best;}else{out.push(rw[i]);i++;}
+  }
+  return out;
+}
+function ehTranscrita(txt,n,j){
+  var w=normTxt(txt).split(' ').filter(function(x){return x;});
+  if(w.length<5)return false;
+  if(j)w=tiraCitacao(w,QTXT[n-1][j-1]);
+  if(w.length<5)return false;
+  var r=analisaRuns(w,TXTN[n-1]);
+  return r.maxRun>=8||(w.length>=8&&r.cob/r.n>0.6);
+}
+
+/* ================= ESTADO ================= */
+var KEY='pt9_cap17_18_leituraguiada_v1';
+var mem={};
+function ler(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return mem}}
+function gravar(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){mem=s}carimbo();}
+var S=ler(); if(!S.resp)S.resp={}; if(!S.feito)S.feito={}; if(!S.auto)S.auto={}; if(!S.chk)S.chk={}; if(!S.tentou)S.tentou={}; if(!S.transcrita)S.transcrita={};
+
+function carimbo(){
+  var d=new Date();
+  var f=d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  S.quando=f;
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){mem=S}
+  document.getElementById('status').textContent='💾 Salvo automaticamente — última vez: '+f;
+}
+
+/* ================= MODAL ================= */
+function aviso(t,msg,onSim,comCancelar){
+  document.getElementById('mTit').textContent=t;
+  document.getElementById('mTxt').textContent=msg;
+  document.getElementById('mNao').style.display=comCancelar?'inline-block':'none';
+  var ov=document.getElementById('overlay'); ov.classList.add('on');
+  document.getElementById('mSim').onclick=function(){ov.classList.remove('on'); if(onSim)onSim();};
+  document.getElementById('mNao').onclick=function(){ov.classList.remove('on');};
+}
+
+/* ================= RENDER ================= */
+function escapa(s){return (s||'').replace(/</g,'&lt;');}
+function statusBloco(n){
+  var rev=false,total=0,sim=0;
+  for(var j=1;j<=3;j++){
+    var k=n+'-'+j;
+    if(S.transcrita[k])rev=true;
+    var pts=PONTOS[n-1][j-1],c=S.chk[k]||[];
+    for(var p=0;p<pts.length;p++){total++;if(c[p]===0)rev=true;if(c[p]===1)sim++;}
+  }
+  if(rev)return 'rev';
+  if(sim===total)return 'ok';
+  return '';
+}
+function render(){
+  var alvo=document.getElementById('blocos'); alvo.innerHTML='';
+  BLOCOS.forEach(function(b,i){
+    var liberado=(i===0)||S.feito[b.n-1];
+    var feito=!!S.feito[b.n];
+    var sec=document.createElement('section');
+    sec.className='bloco'+(liberado?'':' trancado');
+    var perg='';
+    b.q.forEach(function(qt,j){
+      var k=b.n+'-'+(j+1);
+      var v=escapa(S.resp[k]);
+      var verm=!!S.transcrita[k];
+      var ro=(feito&&!verm)?'readonly':'';
+      perg+='<div class="pergunta"><label for="t'+k+'">'+(j+1)+'. '+qt+'</label>'+
+            '<textarea id="t'+k+'" data-b="'+b.n+'" data-q="'+(j+1)+'" class="'+(verm?'verm':'')+'" '+ro+'>'+v+'</textarea>'+
+            (verm?'<p class="avVerm">🔴 Esta resposta ainda está igual ao texto do elo — reescreva com as SUAS palavras.</p>':'')+
+            '</div>';
+    });
+    var mod='';
+    b.a.forEach(function(at,j){
+      var k=b.n+'-'+(j+1);
+      var pts=PONTOS[b.n-1][j],chk=S.chk[k]||[];
+      var linhas='';
+      pts.forEach(function(pt,pi){
+        var vv=chk[pi];
+        linhas+='<div class="ponto"><span>'+pt+'</span>'+
+          '<span class="pbts"><button class="btChk '+(vv===1?'on':'')+'" data-k="'+k+'" data-p="'+pi+'" data-v="1">Sim</button>'+
+          '<button class="btChk nao '+(vv===0?'on':'')+'" data-k="'+k+'" data-p="'+pi+'" data-v="0">Não</button></span></div>';
+      });
+      mod+='<div class="mQ"><p class="mResp"><b>'+(j+1)+'.</b> '+at+'</p>'+
+           '<div class="chkbox"><p class="chkTit">✅ Minha resposta disse que…</p>'+linhas+'</div></div>';
+    });
+    var st=feito?statusBloco(b.n):'';
+    var selo=st==='ok'?'<span class="selo-ok">✅ Elo fechado</span>':st==='rev'?'<span class="selo-rev">🔁 Elo para revisar</span>':'';
+    var legado=(st===''&&S.auto[b.n])?'<span class="legado">(autoavaliação antiga: '+(S.auto[b.n]==='ok'?'✅ acertei':'🔁 revisar')+')</span>':'';
+    sec.innerHTML=
+      '<div class="cab"><span class="num">Elo '+(b.n<10?'0':'')+b.n+'</span><h2>'+b.t+'</h2><span class="pag">'+b.pg+'</span></div>'+
+      (liberado?
+        '<div class="corpo">'+b.html+'</div>'+
+        '<div class="perguntas"><h3>✍️ Escreva com suas palavras — 3 perguntas</h3>'+perg+
+        '<p class="aviso" id="av'+b.n+'"></p>'+
+        '<button class="principal btConferir" data-b="'+b.n+'" '+(feito?'disabled':'')+'>✔️ Conferir</button></div>'+
+        '<div class="modelo" style="display:'+(feito?'block':'none')+'" id="mod'+b.n+'">'+
+          '<h4>Resposta modelo — compare ponto a ponto</h4>'+mod+
+          '<div class="auto">'+selo+legado+'</div>'+
+        '</div>'
+      : '<div class="cadeado">🔒 Este elo abre depois que você conferir o Elo '+(b.n-1<10?'0':'')+(b.n-1)+'.</div>');
+    alvo.appendChild(sec);
+  });
+  ligar(); progresso(); renderRevisar();
+}
+function renderRevisar(){
+  var box=document.getElementById('revisarBox');
+  if(!box){box=document.createElement('section');box.id='revisarBox';box.className='revisar';
+    var bl=document.getElementById('blocos');bl.parentNode.insertBefore(box,bl.nextSibling);}
+  var itens=[];
+  BLOCOS.forEach(function(b){
+    if(!S.feito[b.n])return;
+    for(var j=1;j<=3;j++){
+      var k=b.n+'-'+j;
+      if(S.transcrita[k])itens.push('Elo '+b.n+', pergunta '+j+': resposta igual ao texto — reescrever com as suas palavras.');
+      var pts=PONTOS[b.n-1][j-1],c=S.chk[k]||[];
+      for(var p=0;p<pts.length;p++){if(c[p]===0)itens.push('Elo '+b.n+', pergunta '+j+': faltou dizer — “'+pts[p]+'”.');}
+    }
+    if(statusBloco(b.n)===''&&S.auto[b.n]==='rev')itens.push('Elo '+b.n+': marcado como “preciso revisar”.');
+  });
+  if(!itens.length){box.style.display='none';return;}
+  box.style.display='block';
+  var h='<h2>🔁 Elos frouxos — revisar antes da prova</h2><ul>';
+  itens.forEach(function(t){h+='<li>'+t+'</li>';});
+  box.innerHTML=h+'</ul>';
+}
+function ligar(){
+  document.querySelectorAll('textarea').forEach(function(t){
+    t.addEventListener('input',function(){
+      var k=t.dataset.b+'-'+t.dataset.q;
+      S.resp[k]=t.value;
+      if(S.transcrita[k]&&!ehTranscrita(t.value,parseInt(t.dataset.b,10),parseInt(t.dataset.q,10))){
+        delete S.transcrita[k]; gravar(S); render();
+        var nt=document.getElementById('t'+k);
+        if(nt){nt.focus();try{nt.selectionStart=nt.selectionEnd=nt.value.length;}catch(e){}}
+        return;
+      }
+      gravar(S);
+    });
+  });
+  document.querySelectorAll('.btConferir').forEach(function(bt){
+    bt.addEventListener('click',function(){
+      var n=parseInt(bt.dataset.b,10),vazio=false;
+      for(var j=1;j<=3;j++){var v=(S.resp[n+'-'+j]||'').trim();if(v.length<3)vazio=true;}
+      var av=document.getElementById('av'+n);
+      if(vazio){av.textContent='⚠️ Responda as 3 perguntas (pelo menos 3 letras em cada) antes de conferir.';return;}
+      var primeira=[],naoMudou=[];
+      for(var j2=1;j2<=3;j2++){
+        var k=n+'-'+j2,v2=S.resp[k]||'';
+        if(ehTranscrita(v2,n,j2)){
+          if(S.tentou[k]===undefined){S.tentou[k]=v2;primeira.push(j2);}
+          else if(v2===S.tentou[k]){naoMudou.push(j2);}
+          else{S.transcrita[k]=true;}
+        }else if(S.transcrita[k]){delete S.transcrita[k];}
+      }
+      if(primeira.length||naoMudou.length){
+        gravar(S);
+        var m='🟡 ';
+        if(primeira.length)m+='Pergunta'+(primeira.length>1?'s':'')+' '+primeira.join(', ')+': boa parte da resposta está igual ao texto do elo. Tente explicar como se fosse para um amigo, sem olhar o texto — pode ficar mais curto e simples, o que vale é ser SEU. Depois clique em Conferir de novo. ';
+        if(naoMudou.length)m+='Pergunta'+(naoMudou.length>1?'s':'')+' '+naoMudou.join(', ')+': você ainda não mudou a resposta — altere e clique em Conferir de novo.';
+        av.textContent=m;
+        return;
+      }
+      av.textContent='';
+      S.feito[n]=true; gravar(S); render();
+      var el2=document.getElementById('mod'+n); if(el2)el2.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  });
+  document.querySelectorAll('.btChk').forEach(function(bt){
+    bt.addEventListener('click',function(){
+      var k=bt.dataset.k;
+      if(!S.chk[k])S.chk[k]=[];
+      S.chk[k][parseInt(bt.dataset.p,10)]=parseInt(bt.dataset.v,10);
+      var n=parseInt(k.split('-')[0],10);
+      var st=statusBloco(n); if(st)S.auto[n]=st;
+      gravar(S); render();
+    });
+  });
+}
+function progresso(){
+  var c=0; BLOCOS.forEach(function(b){if(S.feito[b.n])c++;});
+  document.getElementById('barra').style.width=(c/BLOCOS.length*100)+'%';
+  document.getElementById('txtProg').textContent='Elo '+c+' de '+BLOCOS.length+' fechado'+(c===BLOCOS.length?' — corrente completa! 🎉':'.');
+}
+
+/* ================= BOTÕES DO PAINEL ================= */
+document.getElementById('btExportar').onclick=function(){
+  var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='leitura-guiada-portugues9-cap17-18.json'; a.click();
+};
+document.getElementById('btImportar').onclick=function(){document.getElementById('arquivo').click();};
+document.getElementById('arquivo').onchange=function(e){
+  var f=e.target.files[0]; if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{ var d=JSON.parse(r.result); S=d; if(!S.resp)S.resp={}; if(!S.feito)S.feito={}; if(!S.auto)S.auto={}; if(!S.chk)S.chk={}; if(!S.tentou)S.tentou={}; if(!S.transcrita)S.transcrita={};
+      gravar(S); render(); aviso('Pronto','Seu progresso foi importado com sucesso.');
+    }catch(err){ aviso('Ops','Não consegui ler esse arquivo. Ele precisa ser o .json exportado por este material.'); }
+  };
+  r.readAsText(f);
+};
+document.getElementById('btZerar').onclick=function(){
+  aviso('Zerar tudo?','Isso apaga todas as respostas escritas nesta Leitura Guiada. Não dá para desfazer.',function(){
+    S={resp:{},feito:{},auto:{},chk:{},tentou:{},transcrita:{}}; gravar(S); render();
+  },true);
+};
+
+render(); carimbo();
+</script>
+</body>
+</html>

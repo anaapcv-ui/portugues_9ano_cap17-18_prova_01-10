@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulado — Corrente de Memória | Português 9º ano</title>
+<style>
+:root{
+  --grafite:#12151a; --grafite2:#1a1f27; --grafite3:#222932;
+  --azul:#14243d; --azul2:#1d3457;
+  --cobre:#cf7b3a; --cobre2:#e79b5e;
+  --musgo:#6b9a63; --alerta:#c9453f; --vermelho:#b8342f;
+  --texto:#ece7de; --texto2:#9ea79c; --linha:#2e3742;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--grafite);color:var(--texto);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.7;
+  background-image:radial-gradient(circle at 12% 8%,rgba(20,36,61,.5),transparent 45%),
+                   radial-gradient(circle at 88% 92%,rgba(184,52,47,.07),transparent 45%);}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px 90px}
+
+header.topo{background:var(--azul);border:1px solid var(--azul2);border-top:none;
+  border-radius:0 0 6px 6px;padding:28px 20px 20px;text-align:center;margin-bottom:4px}
+.marca{font-size:clamp(26px,6vw,48px);font-weight:800;letter-spacing:.06em;margin:0;line-height:1.05;
+  text-transform:uppercase;color:#dfe8f5}
+.marca .sub{display:block;font-size:.31em;letter-spacing:.3em;font-weight:500;margin-top:12px;color:#8ba3c4}
+.faixa{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;font-size:12.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:#8ba3c4;border-top:1px solid var(--azul2);border-bottom:1px solid var(--azul2);
+  margin-top:16px;padding:9px 0}
+.selo{display:inline-block;background:var(--vermelho);color:#fff;font-weight:700;font-size:12.5px;
+  letter-spacing:.14em;padding:6px 14px;border-radius:3px;text-transform:uppercase}
+
+nav.abas{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0 6px}
+nav.abas a{font-size:13.5px;text-decoration:none;color:var(--texto);border:1px solid var(--linha);
+  background:var(--grafite2);padding:9px 14px;border-radius:3px}
+nav.abas a.atual{background:var(--vermelho);color:#fff;border-color:var(--vermelho);font-weight:700}
+nav.abas a:hover{background:var(--grafite3);border-color:var(--cobre)}
+nav.abas a.atual:hover{background:#cf3f39;color:#fff}
+
+.painel{border:1px solid var(--linha);background:var(--grafite2);padding:13px 15px;margin:20px 0 26px;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-radius:4px}
+.painel .status{font-size:13px;color:var(--texto2)}
+.painel .btns{display:flex;gap:7px;flex-wrap:wrap}
+button{font-size:13.5px;cursor:pointer;font-family:inherit;border:1px solid var(--linha);
+  background:var(--grafite3);color:var(--texto);padding:9px 14px;border-radius:3px}
+button:hover{background:var(--cobre);color:#141014;border-color:var(--cobre)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.principal{background:var(--vermelho);color:#fff;border-color:var(--vermelho);font-weight:700}
+button.principal:hover{background:#cf3f39;color:#fff;border-color:#cf3f39}
+
+.progresso{margin:0 0 26px}
+.barra{height:16px;border:1px solid var(--linha);background:var(--grafite2);border-radius:3px;overflow:hidden}
+.barra i{display:block;height:100%;width:0;transition:width .4s;
+  background:repeating-linear-gradient(45deg,var(--vermelho) 0 9px,#8f2723 9px 18px)}
+.progresso p{font-size:13px;margin:8px 0 0;color:var(--texto2)}
+
+.comofunciona{font-size:15px;background:var(--grafite2);border:1px solid var(--linha);
+  border-left:4px solid var(--vermelho);padding:14px 16px;border-radius:4px;margin-bottom:26px}
+
+.q{border:1px solid var(--linha);background:var(--grafite2);margin:0 0 20px;border-radius:5px;overflow:hidden}
+.q .cab{display:flex;gap:11px;align-items:center;flex-wrap:wrap;padding:13px 18px;
+  border-bottom:1px solid var(--linha);background:var(--grafite3)}
+.q .num{font-size:12px;letter-spacing:.14em;color:#fff;background:var(--azul2);padding:5px 10px;
+  border-radius:3px;font-weight:700;white-space:nowrap}
+.badge{font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:3px;font-weight:700}
+.badge.me{background:#2d5a86;color:#e4eefb}
+.badge.rom{background:#6b4a86;color:#efe4fb}
+.badge.som{background:#8a6a1f;color:#fdf3d8}
+.q .pontos{font-size:12px;color:var(--texto2);margin-left:auto;white-space:nowrap}
+.q .enun{padding:16px 19px 4px;font-size:17.5px}
+.q .enun .citacao{display:block;background:var(--grafite);border-left:4px solid var(--cobre);
+  padding:10px 14px;margin:12px 0;font-style:italic}
+.afirm{margin:12px 0;padding:0;list-style:none}
+.afirm li{margin:0 0 8px;display:flex;gap:10px;align-items:flex-start;font-size:16.5px}
+.afirm .rot{font-weight:700;color:var(--cobre2);flex-shrink:0;min-width:34px}
+
+.alts{padding:6px 19px 18px;list-style:none;margin:0}
+.alts li{margin:0 0 9px}
+.alts label{display:flex;gap:11px;align-items:flex-start;cursor:pointer;padding:10px 13px;
+  border:1px solid var(--linha);border-radius:3px;background:var(--grafite);font-size:16.5px}
+.alts label:hover{border-color:var(--cobre)}
+.alts input{margin:5px 0 0;flex-shrink:0;accent-color:var(--vermelho)}
+.alts .letra{font-weight:700;color:var(--cobre2);flex-shrink:0}
+.alts label.certa{border-color:var(--musgo);background:rgba(107,154,99,.16)}
+.alts label.errada{border-color:var(--linha);background:rgba(255,255,255,.04);opacity:.85}
+.alts label.marcada{outline:2px solid var(--vermelho);outline-offset:1px}
+.coment{font-size:14.5px;margin:7px 0 0 32px;color:var(--texto2);line-height:1.5}
+.coment.ok{color:var(--musgo)}
+
+.somabox{padding:6px 19px 18px}
+.somabox label{display:block;font-size:16px;margin:0 0 9px;color:var(--texto2)}
+.somabox input{font-family:inherit;font-size:22px;font-weight:700;letter-spacing:.06em;width:130px;text-align:center;
+  padding:10px 12px;border:1px solid var(--linha);background:var(--grafite);color:var(--texto);border-radius:3px}
+.somabox input:focus{outline:2px solid var(--vermelho);outline-offset:1px}
+.somares{margin:12px 0 0;font-size:16px}
+.somares.ok{color:var(--musgo);font-weight:700}
+.somares.nao{color:var(--alerta);font-weight:700}
+.somadet{margin:9px 0 0;font-size:14.5px;color:var(--texto2);line-height:1.55}
+.somadet span{display:block;margin:0 0 5px}
+.somadet .v{color:var(--musgo)}
+.somadet .f{color:var(--alerta)}
+.trava{padding:0 19px 16px;font-size:13.5px;color:var(--texto2)}
+
+.resultado{border:2px solid var(--vermelho);background:var(--grafite2);border-radius:5px;padding:22px;margin:0 0 26px;display:none}
+.resultado.on{display:block}
+.resultado h2{margin:0 0 10px;color:var(--cobre2);font-size:26px}
+.placar{font-size:42px;font-weight:800;color:var(--cobre2);margin:6px 0}
+.codigo{font-size:26px;font-weight:800;letter-spacing:.16em;background:var(--grafite);border:2px dashed var(--vermelho);
+  color:var(--cobre2);padding:13px 18px;border-radius:4px;display:inline-block;margin:10px 0}
+.portipo{font-size:15.5px;color:var(--texto2);margin:14px 0 0}
+.destrava{border:1px solid var(--linha);background:var(--grafite2);border-radius:5px;padding:20px;margin:0 0 26px;display:none}
+.destrava.on{display:block}
+.destrava input[type=text]{font-family:inherit;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 13px;border:1px solid var(--linha);background:var(--grafite);color:var(--texto);border-radius:3px;width:210px}
+.destrava .erro{color:var(--alerta);font-size:14.5px;margin:9px 0 0;min-height:18px}
+
+.overlay{position:fixed;inset:0;background:rgba(6,8,11,.78);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.overlay.on{display:flex}
+.modal{background:var(--grafite2);border:2px solid var(--vermelho);max-width:440px;width:100%;padding:23px;border-radius:5px}
+.modal h3{margin:0 0 11px;font-size:21px;color:var(--cobre2)}
+.modal p{margin:0 0 17px}
+.modal .acoes{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+
+.rodape{border-top:2px solid var(--vermelho);margin-top:36px;padding-top:18px;display:flex;flex-wrap:wrap;
+  gap:13px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--texto2)}
+.rodape a{color:var(--texto);text-decoration:none;border:1px solid var(--linha);background:var(--grafite2);
+  padding:10px 16px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em}
+.rodape a:hover{background:var(--vermelho);color:#fff;border-color:var(--vermelho)}
+@media(max-width:620px){body{font-size:17px}.q .pontos{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="topo">
+  <h1 class="marca">Corrente de Memória<span class="sub">Simulado · Português · 9º ano</span></h1>
+  <div class="faixa">
+    <span>Cap. 17 — Diários de guerra</span><span>·</span>
+    <span>Cap. 18 — Intolerância</span><span>·</span>
+    <span>pp. 17–26 e 41–45</span><span>·</span>
+    <span>Prova de 01/10</span>
+  </div>
+  <p style="margin:17px 0 0"><span class="selo">Elo 4 — Simulado · 28 questões</span></p>
+</header>
+
+<nav class="abas">
+  <a href="leitura-guiada.html">📖 1. Leitura Guiada</a>
+  <a href="quiz.html">🎯 2. Quiz</a>
+  <a href="resumo.html">🗺️ 3. Resumo</a>
+  <a href="simulado.html" class="atual">📝 4. Simulado</a>
+  <a href="index.html">🏠 Início</a>
+</nav>
+
+<div class="painel">
+  <div class="status" id="status">Carregando seu progresso…</div>
+  <div class="btns">
+    <button id="btExportar">📥 Exportar</button>
+    <button id="btImportar">📤 Importar</button>
+    <button id="btZerar">🗑️ Zerar tudo</button>
+  </div>
+</div>
+<input type="file" id="arquivo" accept="application/json" style="display:none">
+
+<div class="progresso">
+  <div class="barra"><i id="barra"></i></div>
+  <p id="txtProg">0 de 28 respondidas.</p>
+</div>
+
+<p class="comofunciona">
+<b>Como funciona:</b> 28 questões no estilo vestibular, em três formatos.
+<b style="color:#7fb0e0">OBJETIVA</b> — escolha uma alternativa.
+<b style="color:#c49ae0">ROMANOS</b> — analise as afirmativas I, II, III e IV e escolha a alternativa que diz quais estão corretas.
+<b style="color:#e0c06a">SOMATÓRIO</b> — some os números das afirmativas corretas (01, 02, 04, 08, 16) e escreva o total.
+Responda <b>todas</b> antes de enviar; depois as respostas travam. O gabarito comentado abre com o <b>código SIM</b>.
+</p>
+
+<section class="resultado" id="resultado">
+  <h2>🔗 Simulado corrigido!</h2>
+  <p class="placar" id="placar"></p>
+  <p id="msgPlacar"></p>
+  <p class="portipo" id="portipo"></p>
+  <p style="margin:14px 0 4px">Seu código de liberação do gabarito:</p>
+  <div class="codigo" id="codigo"></div>
+  <p style="font-size:14.5px;color:var(--texto2)">Anote esse código. Ele também abre o Relatório para os pais na página inicial.</p>
+</section>
+
+<section class="destrava" id="destrava">
+  <h3 style="margin:0 0 10px;color:var(--cobre2)">🔓 Abrir o gabarito comentado</h3>
+  <p style="margin:0 0 12px;font-size:16px">Digite o código que apareceu acima:</p>
+  <input type="text" id="inCodigo" placeholder="SIM-00-XX" maxlength="9">
+  <button class="principal" id="btDestravar">Abrir gabarito</button>
+  <p class="erro" id="erroCodigo"></p>
+</section>
+
+<div id="questoes"></div>
+
+<div style="text-align:center;margin:26px 0">
+  <button class="principal" id="btEnviar" style="font-size:17px;padding:14px 30px">✔️ Enviar simulado</button>
+  <p id="avisoEnviar" style="color:var(--cobre2);font-size:14.5px;min-height:20px;margin:11px 0 0"></p>
+</div>
+
+<div class="rodape">
+  <span>Fim da corrente — bons estudos!</span>
+  <a href="index.html">🏠 Voltar ao início</a>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3 id="mTit">Aviso</h3>
+    <p id="mTxt"></p>
+    <div class="acoes">
+      <button id="mNao" style="display:none">Cancelar</button>
+      <button class="principal" id="mSim">Entendi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 28 QUESTÕES =====
+   tipo 'me'  = objetiva · 'rom' = números romanos · 'som' = somatório
+   nas objetivas e romanos a correta é marcada por ok:true (nunca por posição) */
+var Q=[
+
+{id:1,tipo:"me",tema:"Dedução",p:"Leia o encadeamento:",cit:"I. Todo documento histórico precisa de conservação. II. Este diário é um documento histórico. III. Logo, este diário precisa de conservação.",
+ alts:[
+ {t:"Trata-se de uma dedução: parte-se de um princípio geral e chega-se a um caso particular.",ok:true,ex:"O passo I é a premissa geral, o II aplica a premissa e o III é a conclusão que decorre dela."},
+ {t:"Trata-se de uma indução: parte-se de um caso particular para formular uma regra geral.",ex:"O percurso aqui é o inverso: começa no geral (todo documento) e termina no particular (este diário)."},
+ {t:"Trata-se de uma generalização preconceituosa.",ex:"Não há salto indevido: a regra estava dada desde o início e apenas foi aplicada."},
+ {t:"Não há raciocínio: os três passos são independentes entre si.",ex:"Os passos estão encadeados — o III só existe por causa do I e do II."}]},
+
+{id:2,tipo:"me",tema:"Indução",p:"Assinale a alternativa que apresenta um raciocínio INDUTIVO.",
+ alts:[
+ {t:"Chovia toda segunda-feira do mês passado; logo, sempre chove às segundas-feiras.",ok:true,ex:"Parte de casos particulares observados e propõe uma regra geral: é indução (e bem frágil)."},
+ {t:"Todo triângulo tem três lados; esta figura é um triângulo; logo, ela tem três lados.",ex:"É dedução: sai de um princípio geral para um caso particular."},
+ {t:"Todos os mamíferos são vertebrados; a baleia é mamífera; logo, a baleia é vertebrada.",ex:"Também é dedução, com a mesma estrutura de premissa, aplicação e conclusão."},
+ {t:"Se a premissa for verdadeira, a conclusão também será.",ex:"Isso não é um raciocínio, e sim a descrição da propriedade da dedução."}]},
+
+{id:3,tipo:"me",tema:"Indução",p:"Leia:",cit:"I. Dois jogadores daquele time foram expulsos no último jogo. II. Logo, aquele time inteiro é violento.",
+ alts:[
+ {t:"Há uma generalização preconceituosa, pois dois casos isolados viram carimbo para o grupo inteiro.",ok:true,ex:"É exatamente o risco da indução malfeita: a amostra é pequena demais para sustentar a conclusão."},
+ {t:"Há uma dedução bem construída, pois parte de fatos verdadeiros.",ex:"Fatos verdadeiros não bastam: a estrutura vai do particular ao geral, e o salto é indevido."},
+ {t:"Não há conclusão nenhuma, apenas duas premissas.",ex:"O passo II é claramente uma conclusão, marcada pelo conector “logo”."},
+ {t:"O raciocínio é válido porque a expulsão é um fato comprovado.",ex:"A comprovação do fato não valida a extensão dele a todos os jogadores do time."}]},
+
+{id:4,tipo:"som",tema:"Dedução e indução",p:"Sobre os raciocínios dedutivo e indutivo, assinale o que for correto e some os valores.",
+ itens:[
+ {v:1,t:"A dedução parte de um princípio geral e chega a uma conclusão particular.",ok:true,ex:"Correto: esse é o caminho característico da dedução."},
+ {v:2,t:"A indução parte de casos particulares e propõe uma regra geral.",ok:true,ex:"Correto: é o percurso inverso ao da dedução."},
+ {v:4,t:"Na dedução, se a premissa for verdadeira, a conclusão também será.",ok:true,ex:"Correto: é justamente essa a força da dedução."},
+ {v:8,t:"A conclusão de um raciocínio indutivo é sempre garantida.",ok:false,ex:"Errado: a conclusão indutiva é apenas provável, porque parte de uma amostra limitada."},
+ {v:16,t:"A indução nunca aparece em textos de opinião.",ok:false,ex:"Errado: ela é muito usada em textos de opinião — por isso é preciso cuidado com as generalizações."}]},
+
+{id:5,tipo:"rom",tema:"Referentes",p:"Analise as afirmativas sobre os referentes em um texto:",
+ afirm:["Os referentes retomam termos já mencionados no texto.",
+        "Os pronomes são os principais referentes da língua.",
+        "Um texto sem referentes fica mais claro e mais rico.",
+        "Um referente vago dificulta a identificação do antecedente."],
+ alts:[
+ {t:"Apenas I, II e IV estão corretas.",ok:true,ex:"I, II e IV descrevem corretamente a função dos referentes; a III inverte o efeito deles."},
+ {t:"Apenas I e III estão corretas.",ex:"A III é falsa: sem referentes, o texto repete a mesma palavra e fica pobre."},
+ {t:"Apenas II, III e IV estão corretas.",ex:"A III é falsa, o que elimina esta alternativa."},
+ {t:"Todas estão corretas.",ex:"A III é falsa: a ausência de referentes empobrece o texto, não o enriquece."}]},
+
+{id:6,tipo:"me",tema:"Referentes",p:"Leia o trecho e identifique o referente do pronome destacado:",
+ cit:"“O visitante encontra na vitrine a ração do prisioneiro, e é diante dela que muitos se emocionam.”",
+ alts:[
+ {t:"“dela” retoma “a ração do prisioneiro”.",ok:true,ex:"É o único termo feminino singular que pode ser observado na vitrine."},
+ {t:"“dela” retoma “o visitante”.",ex:"“O visitante” é masculino e é quem observa, não o que é observado."},
+ {t:"“dela” retoma “a vitrine”.",ex:"Embora “vitrine” seja feminino, quem emociona é o conteúdo exposto, não o móvel; o referente mais próximo e coerente é a ração."},
+ {t:"“dela” não retoma nada: é apenas uma contração.",ex:"“Dela” é de + ela, e esse “ela” retoma um nome citado antes — portanto, é referente."}]},
+
+{id:7,tipo:"som",tema:"Pronomes relativos",p:"Sobre os pronomes relativos, assinale o que for correto e some os valores.",
+ itens:[
+ {v:1,t:"Retomam um nome já expresso anteriormente no texto.",ok:true,ex:"Correto: é a definição do pronome relativo."},
+ {v:2,t:"“Onde” é um pronome relativo variável.",ok:false,ex:"Errado: “onde” é invariável — ele nunca muda de gênero nem de número."},
+ {v:4,t:"“Cujo”, “o qual” e “quanto” variam em gênero e número.",ok:true,ex:"Correto: os três formam o grupo dos variáveis."},
+ {v:8,t:"O pronome relativo evita a repetição empobrecedora de um termo.",ok:true,ex:"Correto: é para isso que ele serve dentro do período."},
+ {v:16,t:"Toda ocorrência da palavra “que” em um texto é pronome relativo.",ok:false,ex:"Errado: “que” também pode ser conjunção, como em “disse que viria”, onde não há antecedente."}]},
+
+{id:8,tipo:"me",tema:"Pronomes relativos",p:"Assinale o período em que a palavra “que” é pronome relativo.",
+ alts:[
+ {t:"A proximidade das tropas criou uma situação tensa que ameaça a paz da região.",ok:true,ex:"Esse “que” retoma “uma situação tensa” e pode ser trocado por “a qual”: é relativo."},
+ {t:"O porta-voz afirmou que o país está preparado para negociar.",ex:"Esse “que” apenas introduz a declaração: é conjunção, sem antecedente."},
+ {t:"É provável que o acordo seja assinado ainda este mês.",ex:"Também é conjunção: liga a oração à expressão “é provável”."},
+ {t:"O jornal chegou a insinuar que haveria um ataque.",ex:"Mais um caso de conjunção introduzindo o que foi insinuado."}]},
+
+{id:9,tipo:"me",tema:"Pronomes relativos",p:"Identifique o ANTECEDENTE do pronome relativo destacado:",
+ cit:"“Ando pelas ruas de Moscou, onde passei tantas horas da minha infância.”",
+ alts:[
+ {t:"Moscou",ok:true,ex:"O antecedente de “onde” é o lugar citado imediatamente antes: a cidade de Moscou."},
+ {t:"as ruas",ex:"O termo mais próximo e retomado por “onde” é o nome da cidade, que encerra a primeira oração."},
+ {t:"tantas horas",ex:"“Tantas horas” vem depois do pronome; antecedente, por definição, é o que vem antes."},
+ {t:"a minha infância",ex:"“Infância” não é lugar e também aparece depois do pronome."}]},
+
+{id:10,tipo:"rom",tema:"“Que” e “quem”",p:"Analise as afirmativas sobre os pronomes relativos “que” e “quem”:",
+ afirm:["“Que” pode retomar tanto pessoas quanto coisas.",
+        "“Quem” retoma apenas pessoas.",
+        "“Quem” dispensa preposição em qualquer contexto.",
+        "A palavra “que” é sempre pronome relativo."],
+ alts:[
+ {t:"Apenas I e II estão corretas.",ok:true,ex:"III é falsa (quem quase sempre pede preposição) e IV também (que pode ser conjunção)."},
+ {t:"Apenas I, II e III estão corretas.",ex:"A III é falsa: “quem” costuma vir precedido de preposição."},
+ {t:"Apenas II e IV estão corretas.",ex:"A IV é falsa: nem todo “que” é relativo."},
+ {t:"Apenas III e IV estão corretas.",ex:"As duas afirmativas apontadas são justamente as falsas."}]},
+
+{id:11,tipo:"me",tema:"“Quem”",p:"Assinale a frase em que o pronome relativo “quem” foi empregado CORRETAMENTE.",
+ alts:[
+ {t:"Apresentou-se ao superior a quem havia desobedecido.",ok:true,ex:"“Quem” retoma pessoa e vem com a preposição “a”, exigida por desobedecer."},
+ {t:"Os relatórios quem entregamos ontem sumiram do arquivo.",ex:"Relatórios não são pessoas e falta preposição: o certo é “que entregamos”."},
+ {t:"A caixa quem guardei na estante estava vazia.",ex:"Caixa é coisa: o pronome adequado é “que”."},
+ {t:"Os dados quem apresentamos convenceram os acionistas.",ex:"Mesmo problema: dados não são pessoas, e não há preposição — o certo é “que apresentamos”."}]},
+
+{id:12,tipo:"som",tema:"“Onde”",p:"Sobre o pronome relativo “onde”, assinale o que for correto e some os valores.",
+ itens:[
+ {v:1,t:"Tem como antecedente, obrigatoriamente, um lugar.",ok:true,ex:"Correto: essa é a regra de ouro do “onde”."},
+ {v:2,t:"Equivale a “em que”.",ok:true,ex:"Correto: a troca por “em que” é o teste mais rápido."},
+ {v:4,t:"Pode substituir qualquer outro pronome relativo sem prejuízo de sentido.",ok:false,ex:"Errado: fora de contexto de lugar, ele gera erro — como em “o jogo onde assistimos”."},
+ {v:8,t:"Quando dois lugares são mencionados, pode gerar ambiguidade.",ok:true,ex:"Correto: por ser invariável, ele não indica a qual dos dois se refere."},
+ {v:16,t:"É um pronome relativo invariável.",ok:true,ex:"Correto: está no grupo de que, quem, onde, como e quando."}]},
+
+{id:13,tipo:"me",tema:"“Onde”",p:"Assinale a frase em que o pronome relativo “onde” está empregado INCORRETAMENTE.",
+ alts:[
+ {t:"A reunião onde participei durou três horas.",ok:true,ex:"“Reunião” não é lugar e participar pede “de”: o certo é “de que participei” ou “da qual participei”."},
+ {t:"A sala onde os diários ficam guardados é climatizada.",ex:"Está correto: “sala” é lugar."},
+ {t:"O campo onde funcionava a fábrica virou memorial.",ex:"Está correto: “campo” é lugar."},
+ {t:"Visitei o país onde minha avó nasceu.",ex:"Está correto: “país” é lugar e o pronome equivale a “em que”."}]},
+
+{id:14,tipo:"me",tema:"Ambiguidade",p:"Leia a frase e escolha a reescrita que deixa claro que o esconderijo ficava no PORÃO:",
+ cit:"“Conhecemos o porão da casa onde a família se escondeu.”",
+ alts:[
+ {t:"Conhecemos o porão da casa no qual a família se escondeu.",ok:true,ex:"“No qual” é masculino singular e concorda com “porão”, desfazendo a ambiguidade."},
+ {t:"Conhecemos o porão da casa na qual a família se escondeu.",ex:"“Na qual” é feminino e aponta para “casa” — o sentido oposto ao pedido."},
+ {t:"Conhecemos o porão da casa cuja a família se escondeu.",ex:"Erro duplo: “cujo” exige um possuído depois dele e nunca admite artigo."},
+ {t:"Conhecemos o porão da casa onde justamente a família se escondeu.",ex:"Acrescentar “justamente” não elimina a ambiguidade: “onde” continua servindo aos dois lugares."}]},
+
+{id:15,tipo:"som",tema:"“Cujo”",p:"Sobre o pronome relativo “cujo”, assinale o que for correto e some os valores.",
+ itens:[
+ {v:1,t:"Estabelece uma relação de posse entre os termos que liga.",ok:true,ex:"Correto: é essa a função dele."},
+ {v:2,t:"Concorda em gênero e número com o termo possuidor.",ok:false,ex:"Errado: a concordância é com o possuído, o termo que vem logo depois."},
+ {v:4,t:"Concorda em gênero e número com o termo possuído.",ok:true,ex:"Correto: em “o escritor cujas obras”, “cujas” concorda com “obras”."},
+ {v:8,t:"Pode vir seguido de artigo, como em “cuja a vida”.",ok:false,ex:"Errado: depois de “cujo” nunca entra artigo."},
+ {v:16,t:"Exige um termo possuído logo depois dele.",ok:true,ex:"Correto: sem possuído, a construção fica errada, como em “o rapaz cujo estava na escada”."}]},
+
+{id:16,tipo:"me",tema:"“Cujo”",p:"Complete corretamente: “Conheci a pesquisadora ______ artigos foram citados no relatório.”",
+ alts:[
+ {t:"cujos",ok:true,ex:"“Cujos” concorda com “artigos”, masculino plural — o termo possuído."},
+ {t:"cuja",ex:"“Cuja” concordaria com um possuído feminino singular, o que não é o caso de “artigos”."},
+ {t:"cujas",ex:"“Cujas” pede possuído feminino plural; o possuído aqui é “artigos”, masculino."},
+ {t:"cujo",ex:"“Cujo” pede possuído masculino singular; “artigos” está no plural."}]},
+
+{id:17,tipo:"me",tema:"“Cujo”",p:"Assinale a frase CORRETA quanto ao emprego de “cujo”.",
+ alts:[
+ {t:"Este é o museu cujo acervo foi doado por sobreviventes.",ok:true,ex:"Possuidor antes (museu), possuído depois (acervo), concordância certa e sem artigo."},
+ {t:"Este é o museu cujo o acervo foi doado por sobreviventes.",ex:"O artigo “o” não pode aparecer depois de “cujo”."},
+ {t:"Este é o museu cuja acervo foi doado por sobreviventes.",ex:"“Acervo” é masculino, então a forma correta é “cujo”."},
+ {t:"Este é o museu cujo foi doado por sobreviventes.",ex:"Falta o termo possuído depois de “cujo”; caberia apenas “que foi doado”."}]},
+
+{id:18,tipo:"me",tema:"Regência",p:"Complete corretamente: “A lei ______ a advogada se referiu já foi revogada.”",
+ alts:[
+ {t:"a que",ok:true,ex:"O verbo referir-se exige a preposição “a”: referir-se A alguma coisa. Também caberia “à qual”."},
+ {t:"que",ex:"Sem preposição, o verbo fica sem a regência que exige."},
+ {t:"de que",ex:"A preposição “de” não é a exigida por referir-se."},
+ {t:"onde",ex:"“Onde” só vale quando o antecedente é lugar, e “lei” não é lugar."}]},
+
+{id:19,tipo:"me",tema:"Regência",p:"Assinale a frase em que a preposição exigida pelo verbo foi respeitada.",
+ alts:[
+ {t:"Os números de que nos lembramos não batiam com o relatório.",ok:true,ex:"Lembrar-se exige “de”: quem se lembra, lembra-se DE algo."},
+ {t:"Os números que nos lembramos não batiam com o relatório.",ex:"Falta a preposição “de”, exigida por lembrar-se."},
+ {t:"Os números onde nos lembramos não batiam com o relatório.",ex:"Números não são lugar, então “onde” está descartado."},
+ {t:"Os números cujos nos lembramos não batiam com o relatório.",ex:"“Cujo” pede um possuído logo depois, o que não existe aqui."}]},
+
+{id:20,tipo:"rom",tema:"“Quando”",p:"Analise as afirmativas sobre a palavra “quando”:",
+ afirm:["É pronome relativo quando possui um antecedente nominal imediato.",
+        "É sempre pronome relativo, em qualquer contexto.",
+        "É conjunção subordinativa adverbial temporal quando apenas inicia uma oração de tempo.",
+        "Como pronome relativo, nunca pode ser substituído por “em que”."],
+ alts:[
+ {t:"Apenas I e III estão corretas.",ok:true,ex:"II é falsa (ele tem duas funções) e IV também (a troca por “em que” é justamente o teste)."},
+ {t:"Apenas I, II e III estão corretas.",ex:"A II é falsa: “quando” nem sempre é pronome relativo."},
+ {t:"Apenas II e IV estão corretas.",ex:"São exatamente as duas afirmativas falsas."},
+ {t:"Apenas III e IV estão corretas.",ex:"A IV é falsa: como relativo, “quando” equivale a “em que”."}]},
+
+{id:21,tipo:"rom",tema:"Análise de período",p:"Leia o período e analise as afirmativas:",
+ cit:"“Antigamente, quando éramos algo parecido com uma grande família, havia uma bandeja de prata na qual os visitantes deixavam seus cartões.”",
+ afirm:["“Quando” é conjunção subordinativa adverbial temporal, pois não retoma nome algum.",
+        "A preposição “em”, presente em “na qual”, é exigida pelo verbo deixar (deixar em).",
+        "“Na qual” poderia ser substituído por “em que”.",
+        "“Quando” é pronome relativo, pois retoma o advérbio “antigamente”."],
+ alts:[
+ {t:"Apenas I, II e III estão corretas.",ok:true,ex:"A IV é falsa: pronome relativo exige antecedente nominal, e “antigamente” é advérbio."},
+ {t:"Apenas I e IV estão corretas.",ex:"I e IV se contradizem: “quando” não pode ser as duas coisas ao mesmo tempo."},
+ {t:"Apenas II, III e IV estão corretas.",ex:"A IV é falsa, o que elimina esta alternativa."},
+ {t:"Todas estão corretas.",ex:"A IV é falsa: não há antecedente nominal para “quando”."}]},
+
+{id:22,tipo:"me",tema:"Oração adjetiva",p:"Assinale a alternativa em que a oração destacada é subordinada ADJETIVA.",
+ alts:[
+ {t:"O memorial <b>que reúne cartas e fotografias</b> foi inaugurado ontem.",ok:true,ex:"A oração caracteriza o substantivo “memorial” — tem valor de adjetivo."},
+ {t:"O diretor disse <b>que o acervo seria ampliado</b>.",ex:"Essa oração funciona como o objeto do verbo “disse”: é substantiva, não adjetiva."},
+ {t:"<b>Quando a exposição abriu</b>, a fila dava a volta no quarteirão.",ex:"Ela indica circunstância de tempo: é adverbial temporal."},
+ {t:"Chegamos cedo <b>para garantir o ingresso</b>.",ex:"Ela indica finalidade: é adverbial final."}]},
+
+{id:23,tipo:"me",tema:"Oração adjetiva",p:"Em “Ali está a foto da garota que ficou famosa por causa de seu diário”, a oração adjetiva é classificada como:",
+ alts:[
+ {t:"desenvolvida, porque apresenta conectivo (“que”) e verbo conjugado (“ficou”).",ok:true,ex:"Esses são exatamente os dois requisitos da forma desenvolvida."},
+ {t:"reduzida de particípio, porque o verbo não está conjugado.",ex:"O verbo “ficou” está conjugado no pretérito perfeito, e não numa forma nominal."},
+ {t:"reduzida de gerúndio, porque há um conectivo no início.",ex:"A presença de conectivo é justamente o que caracteriza a desenvolvida, não a reduzida."},
+ {t:"reduzida de infinitivo, porque caracteriza um substantivo.",ex:"Caracterizar substantivo define a oração como adjetiva, não como reduzida."}]},
+
+{id:24,tipo:"rom",tema:"Adjetivas reduzidas",p:"Observe as orações adjetivas destacadas e a forma de cada uma:",
+ afirm:["Havia famílias <b>esperando notícias</b> no portão. → reduzida de gerúndio",
+        "Os documentos, <b>guardados por décadas</b>, voltaram à luz. → reduzida de particípio",
+        "Eram cenas <b>de emocionar</b> qualquer visitante. → reduzida de infinitivo",
+        "O museu, <b>que reúne cartas e fotos</b>, abriu ontem. → reduzida de gerúndio"],
+ alts:[
+ {t:"Apenas I, II e III estão corretas.",ok:true,ex:"A IV está errada: “que reúne” tem conectivo e verbo conjugado, portanto é desenvolvida."},
+ {t:"Apenas I e IV estão corretas.",ex:"A IV está errada e as afirmativas II e III estão corretas."},
+ {t:"Apenas II, III e IV estão corretas.",ex:"A IV está errada: aquela oração é desenvolvida, não reduzida."},
+ {t:"Todas estão corretas.",ex:"A IV classifica como gerúndio uma oração claramente desenvolvida."}]},
+
+{id:25,tipo:"me",tema:"Adjetivas reduzidas",p:"Desenvolva a oração adjetiva reduzida: “Vi as cartas guardadas no sótão.”",
+ alts:[
+ {t:"Vi as cartas que estavam guardadas no sótão.",ok:true,ex:"Desenvolver é acrescentar o pronome relativo e conjugar o verbo — a reduzida estava no particípio."},
+ {t:"Vi as cartas guardando no sótão.",ex:"Trocar particípio por gerúndio não desenvolve nada: continua reduzida e ainda muda o sentido."},
+ {t:"Vi as cartas, no sótão, guardadas.",ex:"Apenas mudar a ordem das palavras não transforma a reduzida em desenvolvida."},
+ {t:"Vi as cartas para guardar no sótão.",ex:"Isso vira uma oração de finalidade e altera completamente o sentido original."}]},
+
+{id:26,tipo:"som",tema:"Explicativa e restritiva",p:"Sobre as orações subordinadas adjetivas explicativas e restritivas, assinale o que for correto e some os valores.",
+ itens:[
+ {v:1,t:"A explicativa vem isolada por vírgulas.",ok:true,ex:"Correto: é a marca visível da explicativa."},
+ {v:2,t:"A restritiva delimita o substantivo, destacando-o entre seus semelhantes.",ok:true,ex:"Correto: ela especifica de qual elemento do grupo se fala."},
+ {v:4,t:"A explicativa acrescenta uma característica própria do substantivo e generaliza.",ok:true,ex:"Correto: ela vale para todos os elementos do grupo."},
+ {v:8,t:"A vírgula é o único critério de classificação, independentemente do sentido.",ok:false,ex:"Errado: a vírgula é a marca, mas o critério é o sentido — generalizar ou especificar."},
+ {v:16,t:"A restritiva traz informação essencial e não pode ser isolada por vírgulas.",ok:true,ex:"Correto: separá-la mudaria o sentido do período."}]},
+
+{id:27,tipo:"rom",tema:"Explicativa e restritiva",p:"Compare os dois períodos e analise as afirmativas:",
+ cit:"I. Os países que aderiram ao acordo dispensaram os soldados.  II. Os países, que aderiram ao acordo, dispensaram os soldados.",
+ afirm:["No período I, a oração adjetiva é restritiva e indica que apenas parte dos países aderiu.",
+        "No período II, a oração adjetiva é restritiva por vir entre vírgulas.",
+        "No período II, entende-se que todos os países aderiram ao acordo.",
+        "É do período II que se pode inferir, sem discussão, que a guerra acabou."],
+ alts:[
+ {t:"Apenas I, III e IV estão corretas.",ok:true,ex:"A II se engana: vírgulas marcam a explicativa, e não a restritiva."},
+ {t:"Apenas I e II estão corretas.",ex:"A II é falsa e a III e a IV são verdadeiras."},
+ {t:"Apenas II e III estão corretas.",ex:"A II é falsa: oração entre vírgulas é explicativa."},
+ {t:"Todas estão corretas.",ex:"A II inverte a regra: entre vírgulas, a adjetiva é explicativa."}]},
+
+{id:28,tipo:"me",tema:"Explicativa e restritiva",p:"Leia e assinale a alternativa correta:",
+ cit:"“O homem que semeia guerras espalha a própria destruição.”",
+ alts:[
+ {t:"A adjetiva é restritiva: apenas esse tipo de homem sofrerá as consequências.",ok:true,ex:"Sem vírgulas, a oração delimita o substantivo — fala de um grupo específico de homens."},
+ {t:"A adjetiva é explicativa: todo homem semeia guerras.",ex:"Para generalizar assim, a oração precisaria estar isolada por vírgulas."},
+ {t:"Não há oração adjetiva, porque falta vírgula antes de “que”.",ex:"A vírgula classifica a adjetiva, mas não decide se ela existe: aqui a oração caracteriza “o homem”."},
+ {t:"A adjetiva é reduzida de infinitivo.",ex:"Há conectivo (“que”) e verbo conjugado (“semeia”): a oração é desenvolvida."}]}
+];
+
+/* ===== embaralhamento com semente fixa (mulberry32) ===== */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function embaralhar(arr,semente){
+  var r=mulberry32(semente),a=arr.slice();
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp;}
+  return a;
+}
+Q.forEach(function(q,i){ if(q.alts)q.ordem=embaralhar(q.alts,31337+i*911); });
+Q.forEach(function(q){ if(q.itens){q.soma=0;q.itens.forEach(function(it){if(it.ok)q.soma+=it.v;});} });
+var LETRAS=['a','b','c','d','e'];
+var NOMEBADGE={me:"objetiva",rom:"romanos",som:"somatório"};
+function dois(n){var s=String(n);return s.length<2?'0'+s:s;}
+
+/* ===== ESTADO ===== */
+var KEY='pt9_cap17_18_simulado_v1';
+var mem={};
+function ler(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return mem}}
+function gravar(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){mem=s}carimbo();}
+var S=ler(); if(!S.resp)S.resp={}; if(S.enviado===undefined)S.enviado=false; if(S.aberto===undefined)S.aberto=false;
+
+function carimbo(){
+  var d=new Date();
+  var f=d.toLocaleDateString('pt-BR')+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  S.quando=f;
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){mem=S}
+  document.getElementById('status').textContent='💾 Salvo automaticamente — última vez: '+f;
+}
+function aviso(t,msg,onSim,comCancelar){
+  document.getElementById('mTit').textContent=t;
+  document.getElementById('mTxt').textContent=msg;
+  document.getElementById('mNao').style.display=comCancelar?'inline-block':'none';
+  var ov=document.getElementById('overlay'); ov.classList.add('on');
+  document.getElementById('mSim').onclick=function(){ov.classList.remove('on'); if(onSim)onSim();};
+  document.getElementById('mNao').onclick=function(){ov.classList.remove('on');};
+}
+
+/* ===== CORREÇÃO ===== */
+function certa(q){
+  var r=S.resp[q.id];
+  if(r===undefined||r===''||r===null)return false;
+  if(q.tipo==='som')return parseInt(r,10)===q.soma;
+  return !!(q.ordem[r]&&q.ordem[r].ok);
+}
+function acertos(){var c=0;Q.forEach(function(q){if(certa(q))c++;});return c;}
+function respondida(q){var r=S.resp[q.id];return !(r===undefined||r===''||r===null);}
+function gerarCodigo(){
+  if(S.codigo)return S.codigo;
+  var letras='ABCDEFGHJKLMNPQRSTUVWXYZ'; /* sem I e sem O */
+  var yy=letras[Math.floor(Math.random()*letras.length)]+letras[Math.floor(Math.random()*letras.length)];
+  S.codigo='SIM-'+dois(acertos())+'-'+yy;
+  return S.codigo;
+}
+
+/* ===== RENDER ===== */
+function render(){
+  var alvo=document.getElementById('questoes'); alvo.innerHTML='';
+  Q.forEach(function(q){
+    var sec=document.createElement('section'); sec.className='q';
+    var corpo='';
+    if(q.tipo==='som'){
+      var its='';
+      q.itens.forEach(function(it){
+        its+='<li><span class="rot">'+dois(it.v)+')</span><span>'+it.t+
+             (S.aberto?'<br><span class="'+(it.ok?'v':'f')+'" style="font-size:14px">'+(it.ok?'✅ ':'❌ ')+it.ex+'</span>':'')+
+             '</span></li>';
+      });
+      var val=(S.resp[q.id]===undefined?'':S.resp[q.id]);
+      corpo='<ul class="afirm">'+its+'</ul>'+
+        '<div class="somabox"><label for="s'+q.id+'">Escreva a soma das afirmativas corretas:</label>'+
+        '<input type="number" id="s'+q.id+'" min="0" max="31" data-q="'+q.id+'" value="'+val+'" '+(S.enviado?'disabled':'')+'>'+
+        (S.aberto?'<p class="somares '+(certa(q)?'ok':'nao')+'">'+(certa(q)?'✅ Correto! ':'❌ Sua resposta: '+(val===''?'(em branco)':val)+' · ')+
+          'Soma correta: <b>'+dois(q.soma)+'</b></p>':'')+
+        '</div>';
+    } else {
+      var af='';
+      if(q.afirm){
+        var rot=['I.','II.','III.','IV.'];
+        af='<ul class="afirm">';
+        q.afirm.forEach(function(a,i){af+='<li><span class="rot">'+rot[i]+'</span><span>'+a+'</span></li>';});
+        af+='</ul>';
+      }
+      var itens='';
+      q.ordem.forEach(function(al,idx){
+        var marcada=(S.resp[q.id]===idx);
+        var cls=''; if(S.aberto)cls=al.ok?'certa':'errada'; if(marcada)cls+=' marcada';
+        itens+='<li><label class="'+cls+'">'+
+          '<input type="radio" name="q'+q.id+'" value="'+idx+'" '+(marcada?'checked':'')+' '+(S.enviado?'disabled':'')+'>'+
+          '<span class="letra">'+LETRAS[idx]+')</span><span>'+al.t+'</span></label>'+
+          (S.aberto?'<p class="coment'+(al.ok?' ok':'')+'">'+(al.ok?'✅ CORRETA — ':'⬜ ')+al.ex+'</p>':'')+
+          '</li>';
+      });
+      corpo=af+'<ul class="alts">'+itens+'</ul>';
+    }
+    sec.innerHTML='<div class="cab"><span class="num">Q'+dois(q.id)+'</span>'+
+      '<span class="badge '+q.tipo+'">'+NOMEBADGE[q.tipo]+'</span>'+
+      '<span class="pontos">'+q.tema+' · (0,5)</span></div>'+
+      '<div class="enun">'+q.p+(q.cit?'<span class="citacao">'+q.cit+'</span>':'')+'</div>'+
+      corpo+
+      (S.enviado&&!S.aberto?'<p class="trava">🔒 Respostas travadas. Digite o código SIM lá em cima para abrir o gabarito comentado.</p>':'');
+    alvo.appendChild(sec);
+  });
+  document.querySelectorAll('.alts input').forEach(function(inp){
+    inp.addEventListener('change',function(){
+      S.resp[parseInt(inp.name.slice(1),10)]=parseInt(inp.value,10); gravar(S); render();
+    });
+  });
+  document.querySelectorAll('.somabox input').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var v=inp.value.trim();
+      S.resp[parseInt(inp.dataset.q,10)]=(v===''?'':parseInt(v,10));
+      gravar(S); progresso();
+    });
+  });
+  progresso();
+  document.getElementById('btEnviar').disabled=S.enviado;
+  document.getElementById('btEnviar').textContent=S.enviado?'✔️ Simulado enviado':'✔️ Enviar simulado';
+  if(S.enviado){
+    document.getElementById('resultado').classList.add('on');
+    var c=acertos(),pc=Math.round(c/Q.length*100);
+    document.getElementById('placar').textContent=c+' de '+Q.length+' ('+pc+'%)';
+    document.getElementById('msgPlacar').textContent=
+      pc>=85?'Corrente firme! Você está pronta para a prova — revise só o que escapou.':
+      pc>=60?'Bom desempenho. Abra o gabarito e refaça as questões que erraram.':
+      'Vale voltar à Leitura Guiada e ao Resumo antes de refazer o simulado.';
+    var t={me:[0,0],rom:[0,0],som:[0,0]};
+    Q.forEach(function(q){t[q.tipo][1]++;if(certa(q))t[q.tipo][0]++;});
+    document.getElementById('portipo').textContent=
+      'Por formato — objetivas: '+t.me[0]+'/'+t.me[1]+' · números romanos: '+t.rom[0]+'/'+t.rom[1]+' · somatório: '+t.som[0]+'/'+t.som[1]+'.';
+    document.getElementById('codigo').textContent=gerarCodigo();
+    S.acertos=c; S.total=Q.length; S.porTipo=t;
+    gravar(S);
+    if(!S.aberto)document.getElementById('destrava').classList.add('on');
+    else document.getElementById('destrava').classList.remove('on');
+  }
+}
+function progresso(){
+  var c=0; Q.forEach(function(q){if(respondida(q))c++;});
+  document.getElementById('barra').style.width=(c/Q.length*100)+'%';
+  document.getElementById('txtProg').textContent=c+' de '+Q.length+' respondidas'+(c===Q.length?' — pode enviar! 📝':'.');
+}
+
+/* ===== BOTÕES ===== */
+document.getElementById('btEnviar').onclick=function(){
+  var faltam=[];
+  Q.forEach(function(q){if(!respondida(q))faltam.push(q.id);});
+  var av=document.getElementById('avisoEnviar');
+  if(faltam.length){ av.textContent='⚠️ Ainda faltam as questões: '+faltam.join(', ')+'. Responda todas antes de enviar.'; return; }
+  av.textContent='';
+  aviso('Enviar o simulado?','Depois de enviar, as respostas ficam travadas e não dá para mudar. Tem certeza?',function(){
+    S.enviado=true; gerarCodigo(); gravar(S); render();
+    document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'center'});
+  },true);
+};
+document.getElementById('btDestravar').onclick=function(){
+  var v=(document.getElementById('inCodigo').value||'').trim().toUpperCase();
+  var er=document.getElementById('erroCodigo');
+  if(v!==S.codigo){ er.textContent='❌ Código incorreto. Digite exatamente o código que apareceu acima, com os traços.'; return; }
+  er.textContent=''; S.aberto=true; gravar(S); render();
+};
+document.getElementById('btExportar').onclick=function(){
+  var det={},t={me:[0,0],rom:[0,0],som:[0,0]};
+  Q.forEach(function(q){ det[q.id]=respondida(q)?(certa(q)?'certa':'errada'):null;
+    t[q.tipo][1]++; if(certa(q))t[q.tipo][0]++; });
+  var blob=new Blob([JSON.stringify(Object.assign({},S,{acertos:acertos(),total:Q.length,detalhe:det,porTipo:t}),null,2)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='simulado-portugues9-cap17-18.json'; a.click();
+};
+document.getElementById('btImportar').onclick=function(){document.getElementById('arquivo').click();};
+document.getElementById('arquivo').onchange=function(e){
+  var f=e.target.files[0]; if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{ var d=JSON.parse(r.result); S=d; if(!S.resp)S.resp={};
+      gravar(S); render(); aviso('Pronto','Seu progresso foi importado com sucesso.');
+    }catch(err){ aviso('Ops','Não consegui ler esse arquivo. Ele precisa ser o .json exportado por este material.'); }
+  };
+  r.readAsText(f);
+};
+document.getElementById('btZerar').onclick=function(){
+  aviso('Zerar tudo?','Isso apaga todas as respostas e o código deste Simulado. Não dá para desfazer.',function(){
+    S={resp:{},enviado:false,aberto:false}; gravar(S); render();
+    document.getElementById('resultado').classList.remove('on');
+    document.getElementById('destrava').classList.remove('on');
+  },true);
+};
+
+render(); carimbo();
+</script>
+</body>
+</html>

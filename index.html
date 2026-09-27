@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Corrente de Memória — Kit de Português · 9º ano</title>
+<style>
+:root{
+  --grafite:#12151a; --grafite2:#1a1f27; --grafite3:#222932;
+  --cobre:#cf7b3a; --cobre2:#e79b5e;
+  --musgo:#6b9a63; --alerta:#c9453f; --postit:#e8d37a;
+  --texto:#ece7de; --texto2:#9ea79c; --linha:#2e3742;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--grafite);color:var(--texto);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.7;
+  background-image:radial-gradient(circle at 12% 8%,rgba(207,123,58,.08),transparent 42%),
+                   radial-gradient(circle at 88% 92%,rgba(107,154,99,.06),transparent 45%);}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px 90px}
+
+header.topo{text-align:center;padding:44px 0 26px;border-bottom:2px solid var(--cobre)}
+.marca{font-size:clamp(32px,8vw,64px);font-weight:800;letter-spacing:.06em;margin:0;line-height:1.05;
+  text-transform:uppercase;color:var(--cobre2)}
+.marca .sub{display:block;font-size:.26em;letter-spacing:.3em;font-weight:500;margin-top:14px;color:var(--texto2)}
+.faixa{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;font-size:12.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--texto2);border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);
+  margin-top:20px;padding:10px 0}
+.lead{max-width:680px;margin:22px auto 0;font-size:17px;color:var(--texto2)}
+.corrente{font-size:30px;letter-spacing:.3em;margin:20px 0 0;color:var(--cobre)}
+
+h2.sec{border-bottom:2px solid var(--cobre);margin:44px 0 20px;padding-bottom:8px;font-size:26px;color:var(--cobre2)}
+
+.trilha{display:grid;gap:15px;margin:0 0 20px}
+.mat{display:flex;gap:18px;align-items:flex-start;border:1px solid var(--linha);background:var(--grafite2);
+  border-radius:6px;padding:19px 21px;text-decoration:none;color:var(--texto);transition:border-color .2s,transform .2s}
+.mat:hover{border-color:var(--cobre);transform:translateX(4px)}
+.mat .ico{font-size:34px;line-height:1;flex-shrink:0;width:52px;text-align:center}
+.mat .txt{flex:1}
+.mat h3{margin:0 0 6px;font-size:21px;color:var(--cobre2)}
+.mat p{margin:0;font-size:16px;color:var(--texto2);line-height:1.55}
+.mat .ordem{flex-shrink:0;font-size:12px;letter-spacing:.14em;background:var(--cobre);color:#141014;
+  padding:5px 10px;border-radius:3px;font-weight:700;align-self:center;white-space:nowrap}
+
+.como{border:1px solid var(--linha);background:var(--grafite2);border-radius:6px;padding:20px 24px;margin:0 0 20px}
+.como ol{margin:0;padding-left:23px}
+.como li{margin-bottom:11px}
+.como li b{color:var(--cobre2)}
+
+.postit{background:var(--postit);color:#2a2410;border-radius:3px;padding:18px 20px;font-size:16.5px;line-height:1.55;
+  box-shadow:0 5px 14px rgba(0,0,0,.35);transform:rotate(-.6deg);max-width:620px;margin:0 auto}
+.postit b{display:block;margin-bottom:7px;font-size:15px;letter-spacing:.07em;text-transform:uppercase}
+
+.relatorio{border:2px solid var(--musgo);background:var(--grafite2);border-radius:6px;padding:22px 24px}
+.relatorio h3{margin:0 0 10px;color:var(--musgo);font-size:22px}
+.relatorio input[type=text]{font-family:inherit;font-size:19px;letter-spacing:.12em;text-transform:uppercase;
+  padding:11px 13px;border:1px solid var(--linha);background:var(--grafite);color:var(--texto);border-radius:3px;width:215px}
+.relatorio button{font-size:13.5px;cursor:pointer;font-family:inherit;border:1px solid var(--musgo);
+  background:var(--musgo);color:#0f140f;padding:11px 18px;border-radius:3px;font-weight:700}
+.relatorio button:hover{background:#7fb076}
+.relatorio .erro{color:var(--alerta);font-size:14.5px;margin:10px 0 0;min-height:18px}
+#painelRel{display:none;margin-top:20px}
+#painelRel.on{display:block}
+table.rel{width:100%;border-collapse:collapse;background:var(--grafite);font-size:16.5px;margin:0 0 18px}
+table.rel th,table.rel td{border:1px solid var(--linha);padding:10px 12px;text-align:left;vertical-align:top}
+table.rel th{background:var(--grafite3);color:var(--cobre2);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+table.rel td.vazio{color:var(--texto2);font-style:italic}
+.tabela-wrap{overflow-x:auto}
+.listarev{border:2px solid var(--alerta);background:rgba(201,69,63,.1);border-radius:5px;padding:16px 20px;margin:0 0 18px}
+.listarev h4{margin:0 0 9px;color:var(--alerta);font-size:18px}
+.listarev ul{margin:0;padding-left:22px}
+.listarev li{margin-bottom:6px;font-size:16px}
+.nota{font-size:15px;color:var(--texto2);margin:0}
+
+.rodape{border-top:2px solid var(--cobre);margin-top:44px;padding-top:20px;text-align:center;font-size:14px;color:var(--texto2)}
+@media(max-width:620px){body{font-size:17px}.mat{flex-wrap:wrap;gap:12px}.mat .ordem{align-self:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="topo">
+  <h1 class="marca">Corrente de Memória<span class="sub">Kit de estudos · Português · 9º ano</span></h1>
+  <div class="faixa">
+    <span>Cap. 17 — Diários de guerra</span><span>·</span>
+    <span>Cap. 18 — Intolerância</span><span>·</span>
+    <span>pp. 17–26 e 41–45</span><span>·</span>
+    <span>Prova de 01/10</span>
+  </div>
+  <p class="corrente">🔗 🔗 🔗 🔗</p>
+  <p class="lead">Uma corrente só segura peso quando cada elo está fechado. Aqui, cada elo é uma parte do estudo —
+  e o assunto da prova é justamente isso: as palavras que ligam ideias sem repetir (os pronomes relativos)
+  e as orações que se prendem a um nome para caracterizá-lo (as adjetivas).</p>
+</header>
+
+<h2 class="sec">🔗 Os quatro elos — siga nesta ordem</h2>
+
+<div class="trilha">
+  <a class="mat" href="leitura-guiada.html">
+    <span class="ico">📖</span>
+    <span class="txt">
+      <h3>1. Leitura Guiada</h3>
+      <p>Onze elos de leitura, do raciocínio dedutivo até as orações adjetivas. Em cada elo você escreve
+      três respostas com as suas palavras e confere com a resposta modelo. Termina com as 10 pegadinhas da prova.</p>
+    </span>
+    <span class="ordem">Elo 1</span>
+  </a>
+
+  <a class="mat" href="quiz.html">
+    <span class="ico">🎯</span>
+    <span class="txt">
+      <h3>2. Quiz</h3>
+      <p>18 questões objetivas para testar logo o que acabou de ler, enquanto o assunto está fresco.
+      No fim sai o código <b>MED</b>, que abre o gabarito comentado.</p>
+    </span>
+    <span class="ordem">Elo 2</span>
+  </a>
+
+  <a class="mat" href="resumo.html">
+    <span class="ico">🗺️</span>
+    <span class="txt">
+      <h3>3. Resumo</h3>
+      <p>O resumo de bolso: quadros comparativos, cartas dos pronomes para virar, post-its com as dicas
+      que mais caem e o glossário da prova. Use para fechar exatamente as lacunas que o Quiz revelou.</p>
+    </span>
+    <span class="ordem">Elo 3</span>
+  </a>
+
+  <a class="mat" href="simulado.html">
+    <span class="ico">📝</span>
+    <span class="txt">
+      <h3>4. Simulado</h3>
+      <p>28 questões no estilo vestibular: somatório, números romanos e objetivas. No fim sai o código
+      <b>SIM</b>, que abre o gabarito comentado questão por questão.</p>
+    </span>
+    <span class="ordem">Elo 4</span>
+  </a>
+</div>
+
+<h2 class="sec">📋 Como usar este material</h2>
+<div class="como">
+  <ol>
+    <li>Comece pela <b>Leitura Guiada</b>. Não pule a parte de escrever: é escrever que faz a matéria grudar.
+    Se você copiar o texto do elo, o material pede para reescrever com as suas palavras.</li>
+    <li>Vá para o <b>Quiz</b> logo depois, enquanto o assunto está fresco. Ele mostra onde a corrente está frouxa.</li>
+    <li>Use o <b>Resumo</b> para fechar exatamente essas lacunas — e vire as cartas dos pronomes tentando
+    responder de cabeça antes.</li>
+    <li>Só então encare o <b>Simulado</b>, valendo. Ele é o mais parecido com a prova de verdade.</li>
+    <li>Tudo fica <b>salvo sozinho</b> no navegador. Dá para fechar e voltar depois que nada se perde.
+    Se for estudar em outro aparelho, use o botão <b>📥 Exportar</b> num e <b>📤 Importar</b> no outro.</li>
+  </ol>
+</div>
+
+<div class="postit">
+  <b>📌 Dica para o jovem aprendiz</b>
+  Antes da prova, releia só três coisas: as <b>10 pegadinhas</b> no fim da Leitura Guiada, o <b>quadro
+  explicativa × restritiva</b> do Resumo e a <b>tabela de regência</b> (qual preposição cada verbo pede).
+  É de onde vem a maior parte dos erros.
+</div>
+
+<h2 class="sec">📊 Relatório para os pais</h2>
+<div class="relatorio">
+  <h3>🔒 Área dos responsáveis</h3>
+  <p style="margin:0 0 14px;font-size:16.5px">Digite o código <b>MED</b> do Quiz, o código <b>SIM</b> do Simulado
+  ou o código fixo da família para ver o que já foi feito e o que ficou pendente.</p>
+  <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">
+    <input type="text" id="inCodigo" placeholder="código" maxlength="9">
+    <button id="btAbrir">Abrir relatório</button>
+  </div>
+  <p class="erro" id="erro"></p>
+
+  <div id="painelRel">
+    <div class="tabela-wrap">
+    <table class="rel">
+      <thead><tr><th>Material</th><th>Situação</th><th>Detalhe</th></tr></thead>
+      <tbody id="corpoRel"></tbody>
+    </table>
+    </div>
+    <div id="listaRev"></div>
+    <p class="nota">Observação: os dados ficam salvos <b>neste navegador e neste aparelho</b>. Se o estudo foi feito
+    em outro computador ou celular, os números aparecerão em branco aqui — nesse caso, use o <b>📥 Exportar</b>
+    no aparelho do estudo e o <b>📤 Importar</b> neste.</p>
+  </div>
+</div>
+
+<div class="rodape">
+  🔗 Corrente de Memória · Kit de estudos de Língua Portuguesa · 9º ano · Capítulos 17 e 18
+</div>
+
+</div>
+
+<script>
+var PAIS='PAIS-77';
+var K={
+  lg:'pt9_cap17_18_leituraguiada_v1',
+  qz:'pt9_cap17_18_quiz_v1',
+  rs:'pt9_cap17_18_resumo_v1',
+  sm:'pt9_cap17_18_simulado_v1'
+};
+var TOTAL_ELOS=11, TOTAL_CARTAS=6;
+
+function pega(k){ try{ return JSON.parse(localStorage.getItem(k)||'{}'); }catch(e){ return {}; } }
+
+function codigoValido(v){
+  if(v===PAIS)return true;
+  var q=pega(K.qz), s=pega(K.sm);
+  if(q.codigo&&v===q.codigo)return true;
+  if(s.codigo&&v===s.codigo)return true;
+  return false;
+}
+
+function linha(mat,sit,det,vazio){
+  return '<tr><td><b>'+mat+'</b></td><td'+(vazio?' class="vazio"':'')+'>'+sit+'</td><td'+(vazio?' class="vazio"':'')+'>'+det+'</td></tr>';
+}
+
+function montar(){
+  var lg=pega(K.lg), qz=pega(K.qz), rs=pega(K.rs), sm=pega(K.sm);
+  var html='', revisar=[];
+
+  /* --- Leitura Guiada --- */
+  var feitos=lg.feito?Object.keys(lg.feito).filter(function(k){return lg.feito[k];}).length:0;
+  if(feitos===0){
+    html+=linha('📖 Leitura Guiada','Ainda não começou','—',true);
+  }else{
+    var verm=lg.transcrita?Object.keys(lg.transcrita).filter(function(k){return lg.transcrita[k];}):[];
+    var naos=0;
+    if(lg.chk){ for(var k in lg.chk){ var arr=lg.chk[k]||[];
+      for(var i=0;i<arr.length;i++){ if(arr[i]===0)naos++; } } }
+    html+=linha('📖 Leitura Guiada',feitos+' de '+TOTAL_ELOS+' elos fechados',
+      '🔴 respostas copiadas do texto: <b>'+verm.length+'</b><br>'+
+      '🔁 pontos marcados como “não” no checklist: <b>'+naos+'</b><br>'+
+      'último acesso: '+(lg.quando||'—'));
+    verm.forEach(function(k){ var p=k.split('-');
+      revisar.push('Leitura Guiada — Elo '+p[0]+', pergunta '+p[1]+': a resposta ficou igual ao texto (precisa reescrever com as próprias palavras).'); });
+    if(naos>0)revisar.push('Leitura Guiada — '+naos+' ponto(s) do checklist marcados como “não”: são os trechos que faltaram nas respostas.');
+  }
+
+  /* --- Quiz --- */
+  if(!qz.enviado){
+    var resp=qz.resp?Object.keys(qz.resp).length:0;
+    html+=linha('🎯 Quiz',resp>0?('Em andamento — '+resp+' de 18 respondidas'):'Ainda não começou','—',true);
+  }else{
+    var ac=(qz.acertos===undefined?'?':qz.acertos), tt=(qz.total||18);
+    var pc=(qz.acertos===undefined?'':' ('+Math.round(qz.acertos/tt*100)+'%)');
+    html+=linha('🎯 Quiz','Enviado — <b>'+ac+' de '+tt+'</b>'+pc,
+      'código: <b>'+(qz.codigo||'—')+'</b><br>'+
+      'gabarito aberto: '+(qz.aberto?'sim':'ainda não')+'<br>'+
+      'último acesso: '+(qz.quando||'—'));
+    if(qz.acertos!==undefined&&qz.acertos/tt<0.6)revisar.push('Quiz — acertou menos de 60%. Vale reler o Resumo e refazer.');
+    if(!qz.aberto)revisar.push('Quiz — o gabarito comentado ainda não foi aberto. É nele que estão as explicações dos erros.');
+  }
+
+  /* --- Resumo --- */
+  var rol=(rs.rolagem||0), cartas=rs.viradas?Object.keys(rs.viradas).length:0;
+  if(rol===0&&cartas===0){
+    html+=linha('🗺️ Resumo','Ainda não abriu','—',true);
+  }else{
+    html+=linha('🗺️ Resumo','Leitura: <b>'+rol+'%</b> da página',
+      'cartas dos pronomes viradas: <b>'+cartas+' de '+TOTAL_CARTAS+'</b><br>'+
+      'último acesso: '+(rs.quando||'—'));
+    if(rol<80)revisar.push('Resumo — leu só '+rol+'% da página. O quadro explicativa × restritiva e o glossário ficam no fim.');
+  }
+
+  /* --- Simulado --- */
+  if(!sm.enviado){
+    var resp2=sm.resp?Object.keys(sm.resp).filter(function(k){return sm.resp[k]!==''&&sm.resp[k]!==null;}).length:0;
+    html+=linha('📝 Simulado',resp2>0?('Em andamento — '+resp2+' de 28 respondidas'):'Ainda não começou','—',true);
+  }else{
+    var ac2=(sm.acertos===undefined?'?':sm.acertos), tt2=(sm.total||28);
+    var pc2=(sm.acertos===undefined?'':' ('+Math.round(sm.acertos/tt2*100)+'%)');
+    var pt='';
+    if(sm.porTipo)pt='objetivas '+sm.porTipo.me[0]+'/'+sm.porTipo.me[1]+
+      ' · romanos '+sm.porTipo.rom[0]+'/'+sm.porTipo.rom[1]+
+      ' · somatório '+sm.porTipo.som[0]+'/'+sm.porTipo.som[1]+'<br>';
+    html+=linha('📝 Simulado','Enviado — <b>'+ac2+' de '+tt2+'</b>'+pc2,
+      pt+'código: <b>'+(sm.codigo||'—')+'</b><br>'+
+      'gabarito aberto: '+(sm.aberto?'sim':'ainda não')+'<br>'+
+      'último acesso: '+(sm.quando||'—'));
+    if(sm.acertos!==undefined&&sm.acertos/tt2<0.6)revisar.push('Simulado — acertou menos de 60%. Vale voltar à Leitura Guiada antes de refazer.');
+    if(sm.porTipo){
+      if(sm.porTipo.som[0]<sm.porTipo.som[1])revisar.push('Simulado — errou '+(sm.porTipo.som[1]-sm.porTipo.som[0])+' questão(ões) de somatório.');
+      if(sm.porTipo.rom[0]<sm.porTipo.rom[1])revisar.push('Simulado — errou '+(sm.porTipo.rom[1]-sm.porTipo.rom[0])+' questão(ões) de números romanos.');
+    }
+    if(!sm.aberto)revisar.push('Simulado — o gabarito comentado ainda não foi aberto.');
+  }
+
+  document.getElementById('corpoRel').innerHTML=html;
+
+  var lr=document.getElementById('listaRev');
+  if(revisar.length){
+    var h='<div class="listarev"><h4>🔁 O que ainda pede atenção</h4><ul>';
+    revisar.forEach(function(t){h+='<li>'+t+'</li>';});
+    lr.innerHTML=h+'</ul></div>';
+  }else{
+    lr.innerHTML='<div class="listarev" style="border-color:var(--musgo);background:rgba(107,154,99,.12)">'+
+      '<h4 style="color:var(--musgo)">✅ Nada pendente por aqui</h4>'+
+      '<p style="margin:0;font-size:16px">Ou o estudo está em dia, ou ainda não foi feito neste aparelho.</p></div>';
+  }
+  document.getElementById('painelRel').classList.add('on');
+}
+
+document.getElementById('btAbrir').onclick=function(){
+  var v=(document.getElementById('inCodigo').value||'').trim().toUpperCase();
+  var er=document.getElementById('erro');
+  if(!codigoValido(v)){
+    er.textContent='❌ Código não confere. Use o código MED (do Quiz), o código SIM (do Simulado) ou o código fixo da família.';
+    document.getElementById('painelRel').classList.remove('on');
+    return;
+  }
+  er.textContent=''; montar();
+};
+document.getElementById('inCodigo').addEventListener('keydown',function(e){
+  if(e.key==='Enter')document.getElementById('btAbrir').click();
+});
+</script>
+</body>
+</html>
